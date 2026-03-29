@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>IT: 코기억 — MES & IT термины на корейском</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* (весь CSS без изменений, как в последней версии с цветовой кодировкой и стрелками) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-gradient-start: #1a2a32;
+            --bg-gradient-end: #0e1a1f;
+            --glass-bg: rgba(20, 30, 38, 0.6);
+            --glass-border: rgba(255,255,255,0.2);
+            --card-bg: rgba(25, 35, 45, 0.85);
+            --text-primary: #eef4ff;
+            --text-secondary: #cbdde8;
+            --accent-blue: #2c7cb6;
+            --accent-green: #2b7a4b;
+            --accent-purple: #8b5f9e;
+            --star-color: #f5b042;
+            --shadow-color: rgba(0,0,0,0.3);
+            --header-bg: rgba(20, 30, 38, 0.6);
+            --breakdown-bg: rgba(0, 0, 0, 0.25);
+        }
+        body.light-theme {
+            --bg-gradient-start: #e8f0fe;
+            --bg-gradient-end: #d4e2f5;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(0,0,0,0.1);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-primary: #1a2a3a;
+            --text-secondary: #2c4a5e;
+            --accent-blue: #1e6f9f;
+            --accent-green: #2a6b47;
+            --accent-purple: #7a4a8f;
+            --shadow-color: rgba(0,0,0,0.1);
+            --header-bg: rgba(255, 255, 255, 0.75);
+            --breakdown-bg: rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 10% 20%, var(--bg-gradient-start), var(--bg-gradient-end));
+            min-height: 100vh;
+            padding: 1rem;
+            transition: background 0.3s ease, color 0.2s ease;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            border-radius: 28px;
+            box-shadow: 0 8px 28px var(--shadow-color);
+            border: 1px solid var(--glass-border);
+        }
+        .app-container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.5rem;
+        }
+        .title h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .title p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            transition: 0.2s;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .level-buttons {
+            display: flex;
+            gap: 0.8rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.4rem 0.8rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .level-btn {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            background: rgba(30, 40, 48, 0.6);
+            transition: all 0.2s;
+        }
+        .level-btn i { font-size: 1rem; }
+        .level-btn.active { background: var(--accent-blue); color: white; }
+        .tabs {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding: 0 0.2rem;
+        }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            font-family: inherit;
+            color: var(--text-secondary);
+            flex: 1;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .tab-btn.active { background: var(--accent-blue); color: white; border-color: transparent; }
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.2rem;
+            padding: 0.6rem 1rem;
+            background: var(--glass-bg);
+            border-radius: 40px;
+            backdrop-filter: blur(8px);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .category-stats { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .cards-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 0.5rem; }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 1.3rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 24px var(--shadow-color);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.35s ease;
+            position: relative;
+        }
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card.favorite-card { border: 2px solid var(--star-color); }
+        .card.category-production { border-left: 8px solid #3b82f6; }
+        .card.category-integration { border-left: 8px solid #10b981; }
+        .card.category-logistics { border-left: 8px solid #f59e0b; }
+        .card.category-planning { border-left: 8px solid #ef4444; }
+        .card.category-adaptation { border-left: 8px solid #8b5cf6; }
+        .card.category-contractor { border-left: 8px solid #ec489a; }
+        .card.category-questions { border-left: 8px solid #14b8a6; }
+        .card.category-business { border-left: 8px solid #f97316; }
+        .card.category-it { border-left: 8px solid #06b6d4; }
+        .category-icon {
+            font-size: 2rem;
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,245,0.12);
+            border-radius: 24px;
+        }
+        .word-russian { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+        .korean-block { margin: 0.2rem 0; }
+        .word-korean {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: rgba(0,0,0,0.2);
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .english-trans {
+            font-size: 0.9rem;
+            color: #8bb5d0;
+            margin-left: 10px;
+            font-family: monospace;
+            background: rgba(0,0,0,0.25);
+            padding: 0.2rem 0.6rem;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        .mnemonic-block {
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid var(--star-color);
+            padding: 0.6rem 0.9rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .mnemonic-block i { margin-right: 8px; color: var(--star-color); }
+        .example-block {
+            background: rgba(0,30,40,0.45);
+            border-radius: 18px;
+            padding: 0.6rem 0.9rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+        .example-kr { font-weight: 500; color: var(--text-primary); font-size: 0.9rem; line-height: 1.4; margin-bottom: 6px; }
+        .example-ru { color: var(--text-secondary); font-size: 0.85rem; font-style: italic; line-height: 1.4; }
+        .breakdown-block {
+            background: var(--breakdown-bg);
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            margin-top: 0.2rem;
+            border: 1px solid var(--glass-border);
+        }
+        .breakdown-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breakdown-divider { height: 1px; background: var(--glass-border); margin: 0.5rem 0 0.8rem 0; }
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+        .breakdown-emoji { font-size: 1rem; min-width: 26px; }
+        .breakdown-root { font-weight: 700; color: var(--accent-green); min-width: 45px; }
+        .breakdown-arrow { color: var(--text-secondary); font-weight: bold; }
+        .breakdown-ref { color: var(--star-color); font-weight: 600; }
+        .breakdown-meaning { color: var(--text-secondary); font-size: 0.75rem; opacity: 0.9; }
+        .breakdown-logic { margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--glass-border); }
+        .logic-label { display: flex; align-items: center; gap: 6px; color: var(--star-color); font-weight: 600; margin-bottom: 5px; font-size: 0.8rem; }
+        .logic-text { color: var(--text-primary); font-size: 0.85rem; line-height: 1.4; font-style: italic; }
+        .extra-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 18px;
+            padding: 0.6rem 1rem;
+            margin-top: 0.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--glass-border);
+        }
+        .extra-info-item { flex: 1 1 180px; }
+        .extra-info-label { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 4px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .extra-info-value { color: var(--text-secondary); line-height: 1.4; }
+        .card-footer { display: flex; justify-content: flex-end; margin-top: 0.3rem; }
+        .fav-btn { background: none; border: none; font-size: 1.7rem; cursor: pointer; color: #8aaec0; transition: 0.1s; padding: 0 6px; }
+        .fav-btn.active-fav { color: var(--star-color); text-shadow: 0 0 6px #ffc107; }
+        .empty-state { text-align: center; padding: 2.5rem; background: var(--glass-bg); border-radius: 32px; margin-top: 1.5rem; color: var(--text-secondary); font-size: 1rem; }
+        .scroll-top {
+            position: fixed;
+            bottom: 1.8rem;
+            right: 1.5rem;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #0b2b44, #031e30);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+        .scroll-top:hover { transform: translateY(-6px) scale(1.03); background: linear-gradient(145deg, #124a6e, #052e46); }
+        .scroll-top:active { transform: translateY(2px); }
+        .chevron-big, .chevron-small { display: block; fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+        .chevron-big { width: 28px; height: 20px; margin-top: 2px; }
+        .chevron-small { width: 20px; height: 14px; margin-bottom: 2px; }
+        .scroll-top::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(44,124,182,0.3);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .scroll-top:hover::after { opacity: 1; }
+        footer { margin-top: 2rem; text-align: center; font-size: 0.7rem; color: var(--text-secondary); padding: 1rem; }
+        @media (max-width: 600px) {
+            body { padding: 0.8rem; font-size: 15px; }
+            .header { flex-direction: column; align-items: stretch; }
+            .title h1 { font-size: 1.4rem; }
+            .level-buttons { justify-content: center; }
+            .stats-bar { flex-direction: column; align-items: flex-start; }
+            .word-russian { font-size: 1.4rem; }
+            .word-korean { font-size: 1.2rem; }
+            .english-trans { font-size: 0.75rem; display: inline-block; margin-top: 5px; margin-left: 0; }
+            .card { padding: 1rem; }
+            .breakdown-item { gap: 4px; }
+            .scroll-top { width: 56px; height: 56px; gap: 2px; bottom: 1rem; right: 1rem; }
+            .chevron-big { width: 22px; height: 16px; stroke-width: 2.2; }
+            .chevron-small { width: 16px; height: 12px; stroke-width: 2.2; }
+            .extra-info { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="glass-panel header">
+        <div class="title">
+            <h1><i class="fas fa-microchip"></i> IT: 코기억</h1>
+            <p>한국어 • Русский — MES / IT термины</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему"><i class="fas fa-moon"></i></button>
+    </div>
+    <div class="level-buttons" id="levelSelector">
+        <button class="level-btn" data-level="A1"><i class="fas fa-seedling"></i> A1 · Базовый</button>
+        <button class="level-btn" data-level="B1"><i class="fas fa-cogs"></i> B1 · Профессиональный</button>
+        <button class="level-btn" data-level="C1"><i class="fas fa-rocket"></i> C1 · Экспертный</button>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="dictionary"><i class="fas fa-book-open"></i> Словарь</button>
+        <button class="tab-btn" data-tab="favorites"><i class="fas fa-star"></i> Избранное</button>
+    </div>
+    <div class="stats-bar" id="statsBar">
+        <div class="category-stats">
+            <span><i class="fas fa-layer-group"></i> <span id="currentCategoryStats">—</span></span>
+            <span><i class="fas fa-hashtag"></i> Карточки: <span id="cardCounter">0</span></span>
+        </div>
+    </div>
+    <div id="cardsContainer" class="cards-grid"></div>
+    <div id="emptyMessage" class="empty-state" style="display: none;"></div>
+    <footer>⭐ Нажми на звезду → в избранное | Дополнительная информация: синонимы, связанные слова, грамматика</footer>
+</div>
+<button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
+    <svg class="chevron-big" viewBox="0 0 30 20"><polyline points="2,16 15,3 28,16" stroke="white" fill="none" stroke-width="2.5"/></svg>
+    <svg class="chevron-small" viewBox="0 0 24 14"><polyline points="2,11 12,2 22,11" stroke="white" fill="none" stroke-width="2.5"/></svg>
+</button>
+<script>
+    // ПОЛНЫЙ НАБОР СЛОВ (105+ слов с восстановленным количеством)
+    const wordsDB = [
+        // ===== A1 (27 слов) =====
+        { id:1, ru:"Система MES", ko:"MES 시스템", eng:"MES System", level:"A1", category:"MES", iconCat:"fas fa-chalkboard-user", mnemonic:"MES управляет производством", example:"MES 시스템이 생산 현황을 실시간으로 보여줍니다. → MES система показывает статус производства в реальном времени.", synonyms:"MES(엠이에스)", relatedWords:"생산 실행 시스템", formality:"공식적", partOfSpeech:"명사" },
+        { id:2, ru:"Система управления производством", ko:"생산 실행 시스템", eng:"Manufacturing Execution System", level:"A1", category:"MES", iconCat:"fas fa-diagram-project", mnemonic:"생산 실행 = выполнение производства", example:"생산 실행 시스템 도입으로 납기 준수율이 향상됐습니다. → Внедрение MES повысило соблюдение сроков поставки.", breakdown:{ title:"생산 실행 시스템", components:[{emoji:"🏭",root:"생산",ref:"생산",meaning:"производство"},{emoji:"▶️",root:"실행",ref:"실행",meaning:"выполнение"},{emoji:"💻",root:"시스템",ref:"시스템",meaning:"система"}], logic:"Система для выполнения производства"}, synonyms:"MES", relatedWords:"공정 관리", formality:"공식적", partOfSpeech:"명사" },
+        { id:3, ru:"Автоматизация завода", ko:"공장 자동화", eng:"Factory automation", level:"A1", category:"MES", iconCat:"fas fa-robot", mnemonic:"공장 (завод) + 자동화 (автоматизация)", example:"공장 자동화로 인해 생산성이 20% 증가했습니다. → Автоматизация завода повысила производительность на 20%.", breakdown:{ title:"공장 자동화", components:[{emoji:"🏭",root:"공장",ref:"공장",meaning:"завод"},{emoji:"🤖",root:"자동화",ref:"자동화",meaning:"автоматизация"}], logic:"Автоматизация завода"}, synonyms:"FA", relatedWords:"스마트 팩토리", formality:"공식적", partOfSpeech:"명사" },
+        { id:4, ru:"Производственная линия", ko:"생산 라인", eng:"Production line", level:"A1", category:"MES", iconCat:"fas fa-factory", mnemonic:"Линия сборки", example:"생산 라인 가동률이 95%를 기록했습니다. → Коэффициент использования линии достиг 95%.", synonyms:"제조 라인", relatedWords:"조립 라인", formality:"공식적", partOfSpeech:"명사" },
+        { id:5, ru:"Управление техпроцессом", ko:"공정 관리", eng:"Process control", level:"A1", category:"MES", iconCat:"fas fa-sliders-h", mnemonic:"공정 = процесс, 관리 = управление", example:"공정 관리 시스템이 불량률을 30% 줄였습니다. → Система управления техпроцессом снизила брак на 30%.", breakdown:{ title:"공정 관리", components:[{emoji:"🔄",root:"공정",ref:"공정",meaning:"процесс, этап"},{emoji:"🎯",root:"관리",ref:"관리",meaning:"управление"}], logic:"Управление процессом"}, synonyms:"프로세스 제어", relatedWords:"SPC", formality:"공식적", partOfSpeech:"명사" },
+        { id:6, ru:"Мониторинг в реальном времени", ko:"실시간 모니터링", eng:"Real-time monitoring", level:"A1", category:"MES", iconCat:"fas fa-chart-line", mnemonic:"실시간 = реальное время", example:"센서 데이터가 실시간 모니터링됩니다. → Данные с датчиков отслеживаются в реальном времени.", breakdown:{ title:"실시간", components:[{emoji:"⚡",root:"실",ref:"실제",meaning:"реальность"},{emoji:"⏰",root:"시",ref:"시간",meaning:"время"},{emoji:"📏",root:"간",ref:"간격",meaning:"интервал"}], logic:"Фактический временной промежуток → реальное время"}, synonyms:"리얼타임 모니터링", relatedWords:"실시간 데이터", formality:"공식적", partOfSpeech:"명사" },
+        { id:7, ru:"Сбор данных", ko:"데이터 수집", eng:"Data collection", level:"A1", category:"MES", iconCat:"fas fa-database", mnemonic:"데이터 수집 = собираем информацию", example:"자동 데이터 수집으로 오류가 감소했습니다. → Автоматический сбор данных снизил количество ошибок.", breakdown:{ title:"데이터 수집", components:[{emoji:"💾",root:"데이터",ref:"데이터",meaning:"данные"},{emoji:"📥",root:"수집",ref:"수집",meaning:"сбор"}], logic:"Сбор данных"}, synonyms:"데이터 취득", relatedWords:"센서", formality:"공식적", partOfSpeech:"명사" },
+        { id:8, ru:"История производства", ko:"생산 이력", eng:"Production history", level:"A1", category:"MES", iconCat:"fas fa-history", mnemonic:"Архив партий", example:"생산 이력을 통해 불량 원인을 추적할 수 있습니다. → По истории производства можно отследить причины брака.", breakdown:{ title:"생산 이력", components:[{emoji:"🏭",root:"생산",ref:"생산",meaning:"производство"},{emoji:"📜",root:"이력",ref:"이력",meaning:"история"}], logic:"История производства"}, synonyms:"생산 기록", relatedWords:"이력 추적", formality:"공식적", partOfSpeech:"명사" },
+        { id:9, ru:"Управление качеством", ko:"품질 관리", eng:"Quality management", level:"A1", category:"MES", iconCat:"fas fa-clipboard-check", mnemonic:"품질 = качество", example:"품질 관리는 ISO 9001 기준에 따릅니다. → Управление качеством соответствует стандарту ISO 9001.", breakdown:{ title:"품질 관리", components:[{emoji:"💎",root:"품질",ref:"품질",meaning:"качество"},{emoji:"🎯",root:"관리",ref:"관리",meaning:"управление"}], logic:"Управление качеством"}, synonyms:"QC", relatedWords:"품질 보증", formality:"공식적", partOfSpeech:"명사" },
+        { id:10, ru:"Коэффициент использования оборудования", ko:"가동률", eng:"Utilization rate / OEE", level:"A1", category:"MES", iconCat:"fas fa-chart-simple", mnemonic:"가동률 = OEE", example:"설비 가동률이 목표치를 초과했습니다. → Коэффициент использования оборудования превысил плановое значение.", breakdown:{ title:"가동률", components:[{emoji:"⚡",root:"가",ref:"가동",meaning:"работа"},{emoji:"🔄",root:"동",ref:"동작",meaning:"действие"},{emoji:"📊",root:"률",ref:"비율",meaning:"коэффициент"}], logic:"Процент работы оборудования"}, synonyms:"OEE", relatedWords:"종합 설비 효율", formality:"공식적", partOfSpeech:"명사", extra:"Пример: 가동률 90% = 90% загрузка" },
+        { id:11, ru:"Облачное хранилище", ko:"클라우드", eng:"Cloud", level:"A1", category:"IT", iconCat:"fas fa-cloud", mnemonic:"Облако для данных", example:"클라우드에 백업 데이터를 저장합니다. → Резервные копии хранятся в облаке.", synonyms:"클라우드 컴퓨팅", relatedWords:"서버", formality:"공식적", partOfSpeech:"명사" },
+        { id:12, ru:"База данных", ko:"데이터베이스", eng:"Database", level:"A1", category:"IT", iconCat:"fas fa-database", mnemonic:"База — основа", example:"데이터베이스 연결이 안정적입니다. → Соединение с базой данных стабильно.", synonyms:"DB", relatedWords:"SQL", formality:"공식적", partOfSpeech:"명사" },
+        { id:13, ru:"Подключение", ko:"연결", eng:"Connection", level:"A1", category:"IT", iconCat:"fas fa-plug", mnemonic:"연결 = установка связи", example:"센서 연결 상태를 확인하세요. → Проверьте состояние подключения датчиков.", breakdown:{ title:"연결", components:[{emoji:"🔗",root:"연",ref:"연결",meaning:"соединять"},{emoji:"⚡",root:"결",ref:"결속",meaning:"связывать"}], logic:"Соединение, связь"}, synonyms:"접속", relatedWords:"연동", formality:"공식적", partOfSpeech:"명사", extra:"Глагол: 연결되다 (соединяться)" },
+        { id:14, ru:"Сеть", ko:"네트워크", eng:"Network", level:"A1", category:"IT", iconCat:"fas fa-network-wired", mnemonic:"Связывает устройства", example:"네트워크 장애로 인해 생산이 일시 중단됐습니다. → Из-за сбоя сети производство временно остановлено.", synonyms:"망", relatedWords:"인터넷", formality:"공식적", partOfSpeech:"명사" },
+        { id:15, ru:"Инфраструктура", ko:"인프라", eng:"Infrastructure", level:"A1", category:"IT", iconCat:"fas fa-server", mnemonic:"Фундамент IT", example:"IT 인프라를 현대화했습니다. → Мы модернизировали IT-инфраструктуру.", breakdown:{ title:"인프라", components:[{emoji:"🏗️",root:"인프라",ref:"infrastructure",meaning:"инфраструктура"}], logic:"Основа IT-систем"}, synonyms:"기반 시설", relatedWords:"서버", formality:"공식적", partOfSpeech:"명사" },
+        { id:16, ru:"Платформа", ko:"플랫폼", eng:"Platform", level:"A1", category:"IT", iconCat:"fas fa-cubes", mnemonic:"Основа для приложений", example:"단일 플랫폼으로 모든 공장을 관리합니다. → Все заводы управляются с единой платформы.", synonyms:"기반", relatedWords:"애플리케이션", formality:"공식적", partOfSpeech:"명사" },
+        { id:17, ru:"Модуль", ko:"모듈", eng:"Module", level:"A1", category:"IT", iconCat:"fas fa-puzzle-piece", mnemonic:"Независимый блок", example:"재고 관리 모듈을 새로 개발했습니다. → Разработан новый модуль управления запасами.", synonyms:"구성 요소", relatedWords:"컴포넌트", formality:"공식적", partOfSpeech:"명사" },
+        { id:18, ru:"Программное обеспечение", ko:"소프트웨어", eng:"Software", level:"A1", category:"IT", iconCat:"fas fa-code", mnemonic:"ПО = программы", example:"소프트웨어 버전을 업데이트하세요. → Обновите версию программного обеспечения.", synonyms:"SW", relatedWords:"애플리케이션", formality:"공식적", partOfSpeech:"명사" },
+        { id:19, ru:"Аппаратное обеспечение", ko:"하드웨어", eng:"Hardware", level:"A1", category:"IT", iconCat:"fas fa-microchip", mnemonic:"Железо", example:"서버 하드웨어를 증설했습니다. → Расширено аппаратное обеспечение серверов.", synonyms:"HW", relatedWords:"장비", formality:"공식적", partOfSpeech:"명사" },
+        { id:20, ru:"Серийный номер", ko:"일련번호", eng:"Serial number", level:"A1", category:"IT", iconCat:"fas fa-qrcode", mnemonic:"일련번호 — уникальный код", example:"일련번호로 제품을 식별합니다. → Идентифицируйте изделие по серийному номеру.", breakdown:{ title:"일련번호", components:[{emoji:"1️⃣",root:"일",ref:"일렬",meaning:"последовательность"},{emoji:"🔗",root:"련",ref:"연결",meaning:"связь"},{emoji:"🔢",root:"번",ref:"번호",meaning:"номер"}], logic:"Последовательный номер связи"}, synonyms:"시리얼 번호", relatedWords:"제품 코드", formality:"공식적", partOfSpeech:"명사" },
+        { id:21, ru:"Серверная часть", ko:"백엔드", eng:"Backend", level:"A1", category:"IT", iconCat:"fas fa-gear", mnemonic:"Скрытая логика", example:"백엔드 API가 안정적으로 작동합니다. → Бэкенд API работает стабильно.", breakdown:{ title:"백엔드", components:[{emoji:"🔙",root:"백",ref:"back (англ.)",meaning:"задний"},{emoji:"🔚",root:"엔드",ref:"end (англ.)",meaning:"конец"}], logic:"Задняя часть системы"}, synonyms:"서버 측", relatedWords:"프론트엔드", formality:"공식적", partOfSpeech:"명사" },
+        { id:22, ru:"Клиентская часть", ko:"프론트엔드", eng:"Frontend", level:"A1", category:"IT", iconCat:"fas fa-laptop-code", mnemonic:"Интерфейс пользователя", example:"프론트엔드를 React로 재구축했습니다. → Фронтенд переписан на React.", breakdown:{ title:"프론트엔드", components:[{emoji:"🔜",root:"프론트",ref:"front (англ.)",meaning:"передний"},{emoji:"🔚",root:"엔드",ref:"end (англ.)",meaning:"конец"}], logic:"Передняя часть, интерфейс"}, synonyms:"클라이언트 측", relatedWords:"UI", formality:"공식적", partOfSpeech:"명사" },
+        { id:23, ru:"Панель управления", ko:"대시보드", eng:"Dashboard", level:"A1", category:"IT", iconCat:"fas fa-gauge-high", mnemonic:"Дашборд KPI", example:"대시보드에서 실시간 KPI를 확인하세요. → Проверяйте KPI в реальном времени на панели управления.", synonyms:"관리 화면", relatedWords:"KPI", formality:"공식적", partOfSpeech:"명사" },
+        { id:24, ru:"Отчёт", ko:"보고서", eng:"Report", level:"A1", category:"IT", iconCat:"fas fa-file-alt", mnemonic:"Документ с результатами", example:"월간 생산 보고서를 제출했습니다. → Ежемесячный отчёт о производстве сдан.", synonyms:"리포트", relatedWords:"분석", formality:"공식적", partOfSpeech:"명사" },
+        { id:25, ru:"Уведомление", ko:"알림", eng:"Notification / Alert", level:"A1", category:"IT", iconCat:"fas fa-bell", mnemonic:"Оповещение", example:"장애 알림이 즉시 발송됩니다. → Уведомление о сбое отправляется немедленно.", synonyms:"통지", relatedWords:"경고", formality:"공식적", partOfSpeech:"명사" },
+        { id:26, ru:"Масштабируемость", ko:"확장성", eng:"Scalability", level:"A1", category:"IT", iconCat:"fas fa-chart-line", mnemonic:"Способность расти", example:"클라우드 기반은 확장성이 뛰어납니다. → Облачная платформа отличается высокой масштабируемостью.", breakdown:{ title:"확장성", components:[{emoji:"📈",root:"확",ref:"확대",meaning:"расширение"},{emoji:"↔️",root:"장",ref:"연장",meaning:"удлинение"},{emoji:"🎯",root:"성",ref:"성격",meaning:"свойство"}], logic:"Свойство расширяться"}, synonyms:"스케일러빌리티", relatedWords:"탄력성", formality:"공식적", partOfSpeech:"명사", antonyms:"축소성" },
+        { id:27, ru:"Совместимость", ko:"호환성", eng:"Compatibility", level:"A1", category:"IT", iconCat:"fas fa-exchange-alt", mnemonic:"Совместимость устройств", example:"이 장비는 기존 시스템과 호환성이 좋습니다. → Это оборудование совместимо с существующей системой.", breakdown:{ title:"호환성", components:[{emoji:"🔄",root:"호",ref:"호응",meaning:"взаимный отклик"},{emoji:"🤝",root:"환",ref:"교환",meaning:"обмен"},{emoji:"🎯",root:"성",ref:"성질",meaning:"свойство"}], logic:"Свойство взаимного обмена"}, synonyms:"상호 운용성", relatedWords:"표준", formality:"공식적", partOfSpeech:"명사" },
+        
+        // ===== B1 (47 слов, включая все из предыдущей версии) =====
+        { id:28, ru:"Интеграция", ko:"통합", eng:"Integration", level:"B1", category:"Интеграция", iconCat:"fas fa-code-branch", mnemonic:"통합 = объединение систем", example:"ERP와 MES 통합이 완료되었습니다. → Интеграция ERP и MES завершена.", breakdown:{ title:"통합", components:[{emoji:"🔷",root:"통",ref:"통일",meaning:"единство"},{emoji:"🧩",root:"합",ref:"합동",meaning:"совместный"}], logic:"Объединить в единое целое"}, synonyms:"결합", relatedWords:"시스템 통합", formality:"공식적", partOfSpeech:"명사" },
+        { id:29, ru:"Синхронизация / взаимодействие систем", ko:"연동", eng:"Interworking", level:"B1", category:"Интеграция", iconCat:"fas fa-sync-alt", mnemonic:"연동 — синхронная работа", example:"WMS와 연동하여 재고를 실시간으로 관리합니다. → Благодаря синхронизации с WMS управляем запасами в реальном времени.", breakdown:{ title:"연동", components:[{emoji:"🔗",root:"연",ref:"연결",meaning:"связь"},{emoji:"⚙️",root:"동",ref:"이동",meaning:"движение"}], logic:"Связанное движение"}, synonyms:"상호 연결", relatedWords:"연결, 접속", formality:"공식적", partOfSpeech:"명사", extra:"Глагол: 연동되다 (синхронизироваться)" },
+        { id:30, ru:"Подключение", ko:"연결", eng:"Connection", level:"B1", category:"Интеграция", iconCat:"fas fa-plug", mnemonic:"연결 = установка связи", example:"센서 연결 상태를 확인하세요. → Проверьте состояние подключения датчиков.", synonyms:"접속", relatedWords:"연동", formality:"공식적", partOfSpeech:"명사" },
+        { id:31, ru:"Соединение / доступ", ko:"접속", eng:"Access", level:"B1", category:"Интеграция", iconCat:"fas fa-door-open", mnemonic:"접속 — доступ к системе", example:"동시 접속자 수가 500명을 넘었습니다. → Количество одновременных подключений превысило 500.", breakdown:{ title:"접속", components:[{emoji:"🚪",root:"접",ref:"접근",meaning:"доступ"},{emoji:"🔗",root:"속",ref:"속하다",meaning:"принадлежать"}], logic:"Доступ и подключение"}, synonyms:"연결", relatedWords:"로그인", formality:"공식적", partOfSpeech:"명사" },
+        { id:32, ru:"Интерфейс", ko:"인터페이스", eng:"Interface", level:"B1", category:"Интеграция", iconCat:"fas fa-desktop", mnemonic:"Интерфейс взаимодействия", example:"사용자 인터페이스가 직관적입니다. → Пользовательский интерфейс интуитивно понятен.", synonyms:"UI", relatedWords:"사용자 경험", formality:"공식적", partOfSpeech:"명사" },
+        { id:33, ru:"API", ko:"API (에이피아이)", eng:"API", level:"B1", category:"Интеграция", iconCat:"fas fa-plug", mnemonic:"API — интерфейс программирования", example:"REST API를 통해 데이터를 주고받습니다. → Обмен данными происходит через REST API.", synonyms:"애플리케이션 프로그래밍 인터페이스", relatedWords:"REST", formality:"공식적", partOfSpeech:"명사" },
+        { id:34, ru:"Подключение систем", ko:"시스템 연결", eng:"System connection", level:"B1", category:"Интеграция", iconCat:"fas fa-link", mnemonic:"시스템 연결 = связывание систем", example:"시스템 연결 테스트를 진행 중입니다. → Проводится тестирование подключения систем.", synonyms:"시스템 연동", relatedWords:"네트워크", formality:"공식적", partOfSpeech:"명사" },
+        { id:35, ru:"Обмен данными", ko:"데이터 연동", eng:"Data exchange", level:"B1", category:"Интеграция", iconCat:"fas fa-exchange-alt", mnemonic:"데이터 연동 — data interworking", example:"클라우드와 데이터 연동이 안정적입니다. → Обмен данными с облаком стабилен.", breakdown:{ title:"데이터 연동", components:[{emoji:"💾",root:"데이터",ref:"데이터",meaning:"данные"},{emoji:"🔗",root:"연",ref:"연결",meaning:"связь"},{emoji:"⚙️",root:"동",ref:"동작",meaning:"действие"}], logic:"Связанное действие данных"}, synonyms:"데이터 교환", relatedWords:"API", formality:"공식적", partOfSpeech:"명사" },
+        { id:36, ru:"Интеграция с внешними системами", ko:"외부 시스템 연동", eng:"Integration with external systems", level:"B1", category:"Интеграция", iconCat:"fas fa-share-alt", mnemonic:"외부 시스템 = внешние системы", example:"외부 시스템 연동을 위한 미들웨어를 도입했습니다. → Внедрено промежуточное ПО для интеграции с внешними системами.", breakdown:{ title:"외부 시스템 연동", components:[{emoji:"🌍",root:"외부",ref:"외부",meaning:"внешний"},{emoji:"💻",root:"시스템",ref:"시스템",meaning:"система"},{emoji:"🔗",root:"연동",ref:"연동",meaning:"синхронизация"}], logic:"Синхронизация с внешними системами"}, synonyms:"시스템 통합", relatedWords:"게이트웨이", formality:"공식적", partOfSpeech:"명사" },
+        { id:37, ru:"Единая платформа", ko:"단일 플랫폼", eng:"Single platform", level:"B1", category:"Интеграция", iconCat:"fas fa-layer-group", mnemonic:"단일 플랫폼 — унификация", example:"단일 플랫폼으로 모든 공장을 통합 관리합니다. → Единая платформа объединяет управление всеми заводами.", synonyms:"통합 플랫폼", relatedWords:"중앙 관리", formality:"공식적", partOfSpeech:"명사" },
+        { id:38, ru:"Шлюз", ko:"게이트웨이", eng:"Gateway", level:"B1", category:"Интеграция", iconCat:"fas fa-network-wired", mnemonic:"Шлюз для передачи данных", example:"IoT 게이트웨이를 통해 센서 데이터를 수집합니다. → Через IoT-шлюз собираются данные с датчиков.", synonyms:"통신 게이트웨이", relatedWords:"라우터", formality:"공식적", partOfSpeech:"명사" },
+        { id:39, ru:"Отслеживание продукции", ko:"제품 추적", eng:"Product tracking", level:"B1", category:"Отслеживание", iconCat:"fas fa-map-marker-alt", mnemonic:"제품 추적 — трассировка товара", example:"제품 추적 시스템으로 이력 관리가 가능합니다. → Система отслеживания позволяет управлять историей продукции.", breakdown:{ title:"제품 추적", components:[{emoji:"📦",root:"제품",ref:"제품",meaning:"продукт"},{emoji:"🔍",root:"추",ref:"추적",meaning:"отслеживание"},{emoji:"📍",root:"적",ref:"적용",meaning:"применение"}], logic:"Отслеживание продукта"}, synonyms:"트래킹", relatedWords:"이력 관리", formality:"공식적", partOfSpeech:"명사" },
+        { id:40, ru:"Определение местоположения", ko:"위치 파악", eng:"Location identification", level:"B1", category:"Отслеживание", iconCat:"fas fa-location-dot", mnemonic:"위치 파악 — геолокация", example:"RFID가 위치 파악을 돕습니다. → RFID помогает определить местоположение.", breakdown:{ title:"위치 파악", components:[{emoji:"📍",root:"위치",ref:"위치",meaning:"местоположение"},{emoji:"🔍",root:"파악",ref:"파악",meaning:"определение"}], logic:"Определение позиции"}, synonyms:"로컬라이제이션", relatedWords:"GPS", formality:"공식적", partOfSpeech:"명사" },
+        { id:41, ru:"Управление запасами", ko:"재고 관리", eng:"Inventory management", level:"B1", category:"Отслеживание", iconCat:"fas fa-boxes", mnemonic:"재고 관리 = inventory control", example:"재고 관리 시스템이 실시간으로 수량을 반영합니다. → Система управления запасами отражает количество в реальном времени.", breakdown:{ title:"재고 관리", components:[{emoji:"📦",root:"재고",ref:"재고",meaning:"запас"},{emoji:"🎯",root:"관리",ref:"관리",meaning:"управление"}], logic:"Управление запасами"}, synonyms:"인벤토리 관리", relatedWords:"WMS", formality:"공식적", partOfSpeech:"명사" },
+        { id:42, ru:"Номер стеллажа", ko:"선반 번호", eng:"Rack number", level:"B1", category:"Отслеживание", iconCat:"fas fa-archive", mnemonic:"선반 번호 — стеллаж для хранения", example:"피킹을 위해 선반 번호를 입력하세요. → Укажите номер стеллажа для комплектации.", synonyms:"랙 번호", relatedWords:"창고", formality:"공식적", partOfSpeech:"명사" },
+        { id:43, ru:"Серийный номер", ko:"일련번호", eng:"Serial number", level:"B1", category:"Отслеживание", iconCat:"fas fa-qrcode", mnemonic:"일련번호 — уникальный код", example:"일련번호로 제품을 식별합니다. → Идентифицируйте изделие по серийному номеру.", breakdown:{ title:"일련번호", components:[{emoji:"1️⃣",root:"일",ref:"일렬",meaning:"последовательность"},{emoji:"🔗",root:"련",ref:"연결",meaning:"связь"},{emoji:"🔢",root:"번",ref:"번호",meaning:"номер"}], logic:"Последовательный номер связи"}, synonyms:"S/N", relatedWords:"제품 코드", formality:"공식적", partOfSpeech:"명사" },
+        { id:44, ru:"RFID-метка", ko:"RFID 태그", eng:"RFID tag", level:"B1", category:"Отслеживание", iconCat:"fas fa-tag", mnemonic:"RFID для бесконтактной идентификации", example:"RFID 태그로 재고를 실시간 추적합니다. → Отслеживайте запасы в реальном времени с помощью RFID-меток.", synonyms:"RFID", relatedWords:"바코드", formality:"공식적", partOfSpeech:"명사" },
+        { id:45, ru:"Логистический поток", ko:"물류 흐름", eng:"Logistics flow", level:"B1", category:"Отслеживание", iconCat:"fas fa-truck-fast", mnemonic:"물류 흐름 — движение грузов", example:"물류 흐름 최적화가 필요합니다. → Необходима оптимизация логистического потока.", breakdown:{ title:"물류 흐름", components:[{emoji:"🚚",root:"물류",ref:"물류",meaning:"логистика"},{emoji:"🌊",root:"흐름",ref:"흐름",meaning:"поток"}], logic:"Поток логистики"}, synonyms:"물류 흐름", relatedWords:"SCM", formality:"공식적", partOfSpeech:"명사" },
+        { id:46, ru:"Система определения местоположения", ko:"위치 정보 시스템", eng:"Location information system", level:"B1", category:"Отслеживание", iconCat:"fas fa-satellite", mnemonic:"LBS — location based service", example:"창고 내 위치 정보 시스템을 도입했습니다. → Внедрена система определения местоположения на складе.", synonyms:"LBS", relatedWords:"GPS", formality:"공식적", partOfSpeech:"명사" },
+        { id:47, ru:"Отслеживание местоположения в реальном времени", ko:"실시간 위치 추적", eng:"Real-time location tracking", level:"B1", category:"Отслеживание", iconCat:"fas fa-location-arrow", mnemonic:"RTLS — real-time location system", example:"차량 실시간 위치 추적이 가능합니다. → Возможно отслеживание местоположения транспорта в реальном времени.", breakdown:{ title:"실시간 위치 추적", components:[{emoji:"⏱️",root:"실시간",ref:"실시간",meaning:"реальное время"},{emoji:"📍",root:"위치",ref:"위치",meaning:"местоположение"},{emoji:"🔍",root:"추적",ref:"추적",meaning:"отслеживание"}], logic:"Отслеживание местоположения в реальном времени"}, synonyms:"RTLS", relatedWords:"GPS", formality:"공식적", partOfSpeech:"명사" },
+        { id:48, ru:"Сроки внедрения", ko:"도입 일정", eng:"Implementation schedule", level:"B1", category:"Планирование", iconCat:"fas fa-calendar-alt", mnemonic:"도입 일정 — план внедрения", example:"도입 일정을 조정했습니다. → Скорректированы сроки внедрения.", breakdown:{ title:"도입 일정", components:[{emoji:"🚀",root:"도입",ref:"도입",meaning:"внедрение"},{emoji:"📅",root:"일정",ref:"일정",meaning:"график"}], logic:"График внедрения"}, synonyms:"도입 계획", relatedWords:"프로젝트 일정", formality:"공식적", partOfSpeech:"명사" },
+        { id:49, ru:"Крайний срок", ko:"마감일", eng:"Deadline", level:"B1", category:"Планирование", iconCat:"fas fa-hourglass-end", mnemonic:"마감일 = дедлайн", example:"마감일은 5월 30일입니다. → Крайний срок — 30 мая.", synonyms:"데드라인", relatedWords:"납기일", formality:"공식적", partOfSpeech:"명사" },
+        { id:50, ru:"Срок поставки", ko:"납기일", eng:"Delivery date", level:"B1", category:"Планирование", iconCat:"fas fa-truck", mnemonic:"납기일 — дата отгрузки", example:"장비 납기일을 확인하세요. → Проверьте срок поставки оборудования.", synonyms:"배송일", relatedWords:"납기", formality:"공식적", partOfSpeech:"명사" },
+        { id:51, ru:"Поэтапный график", ko:"단계별 일정", eng:"Phased schedule", level:"B1", category:"Планирование", iconCat:"fas fa-chart-gantt", mnemonic:"단계별 = по этапам", example:"프로젝트 단계별 일정을 수립했습니다. → Составлен поэтапный график проекта.", synonyms:"단계적 일정", relatedWords:"마일스톤", formality:"공식적", partOfSpeech:"명사" },
+        { id:52, ru:"Пилотная эксплуатация", ko:"시범 운영", eng:"Pilot operation", level:"B1", category:"Планирование", iconCat:"fas fa-flask", mnemonic:"시범 운영 = пилот", example:"시범 운영을 2주간 진행합니다. → Пилотная эксплуатация продлится 2 недели.", breakdown:{ title:"시범 운영", components:[{emoji:"🧪",root:"시범",ref:"시범",meaning:"пилотный"},{emoji:"⚙️",root:"운영",ref:"운영",meaning:"эксплуатация"}], logic:"Пилотная эксплуатация"}, synonyms:"파일럿 테스트", relatedWords:"본격 도입", formality:"공식적", partOfSpeech:"명사" },
+        { id:53, ru:"Полноценное внедрение", ko:"본격 도입", eng:"Full-scale implementation", level:"B1", category:"Планирование", iconCat:"fas fa-check-double", mnemonic:"본격 도입 — старт полномасштабно", example:"7월 본격 도입 예정입니다. → Полноценное внедрение запланировано на июль.", breakdown:{ title:"본격 도입", components:[{emoji:"⚡",root:"본격",ref:"본격",meaning:"полномасштабный"},{emoji:"🚀",root:"도입",ref:"도입",meaning:"внедрение"}], logic:"Полномасштабное внедрение"}, synonyms:"전면 도입", relatedWords:"시범 운영", formality:"공식적", partOfSpeech:"명사" },
+        { id:54, ru:"Согласование сроков", ko:"일정 조율", eng:"Schedule coordination", level:"B1", category:"Планирование", iconCat:"fas fa-handshake", mnemonic:"일정 조율 — согласование графика", example:"고객사와 일정 조율이 필요합니다. → Необходимо согласование сроков с заказчиком.", synonyms:"일정 협의", relatedWords:"미팅", formality:"공식적", partOfSpeech:"명사" },
+        { id:55, ru:"Этапы проекта", ko:"프로젝트 단계", eng:"Project phases", level:"B1", category:"Планирование", iconCat:"fas fa-diagram-project", mnemonic:"프로젝트 단계 — фазы проекта", example:"프로젝트 단계가 정의됐습니다. → Определены этапы проекта.", synonyms:"프로젝트 페이즈", relatedWords:"마일스톤", formality:"공식적", partOfSpeech:"명사" },
+        { id:56, ru:"Момент завершения", ko:"완료 시점", eng:"Completion point", level:"B1", category:"Планирование", iconCat:"fas fa-flag-checkered", mnemonic:"완료 시점 — время окончания", example:"완료 시점이 협의됐습니다. → Момент завершения согласован.", synonyms:"종료 시점", relatedWords:"마감일", formality:"공식적", partOfSpeech:"명사" },
+        { id:57, ru:"Кастомизация", ko:"맞춤화", eng:"Customization", level:"B1", category:"Адаптация", iconCat:"fas fa-pen-ruler", mnemonic:"맞춤화 = настройка под клиента", example:"기술자에 맞춘 인터페이스 맞춤화. → Кастомизация интерфейса под технологов.", breakdown:{ title:"맞춤화", components:[{emoji:"📏",root:"맞춤",ref:"맞춤",meaning:"настройка"},{emoji:"🔄",root:"화",ref:"변화",meaning:"превращение"}], logic:"Превращение в настроенное"}, synonyms:"커스터마이징", relatedWords:"사용자 정의", formality:"공식적", partOfSpeech:"명사" },
+        { id:58, ru:"Учёт требований", ko:"요구사항 반영", eng:"Incorporation of requirements", level:"B1", category:"Адаптация", iconCat:"fas fa-clipboard-list", mnemonic:"요구사항 반영 = реализация требований", example:"고객 요구사항 반영이 완료됐습니다. → Учёт требований заказчика завершён.", breakdown:{ title:"요구사항 반영", components:[{emoji:"📋",root:"요구",ref:"요구",meaning:"требование"},{emoji:"📄",root:"사항",ref:"사항",meaning:"пункт"},{emoji:"🔄",root:"반영",ref:"반영",meaning:"отражение"}], logic:"Отражение требований"}, synonyms:"요구 반영", relatedWords:"명세서", formality:"공식적", partOfSpeech:"명사" },
+        { id:59, ru:"Модификация системы", ko:"시스템 수정", eng:"System modification", level:"B1", category:"Адаптация", iconCat:"fas fa-code-branch", mnemonic:"시스템 수정 = доработка", example:"새 표준에 맞는 시스템 수정이 필요합니다. → Требуется модификация системы под новый стандарт.", synonyms:"시스템 변경", relatedWords:"업데이트", formality:"공식적", partOfSpeech:"명사" },
+        { id:60, ru:"Настройка интерфейса", ko:"인터페이스 조정", eng:"Interface adjustment", level:"B1", category:"Адаптация", iconCat:"fas fa-sliders-h", mnemonic:"인터페이스 조정 = UI tuning", example:"사용자 맞춤 인터페이스 조정을 진행했습니다. → Проведена настройка интерфейса под пользователя.", synonyms:"UI 조정", relatedWords:"사용성", formality:"공식적", partOfSpeech:"명사" },
+        { id:61, ru:"Пользовательская настройка", ko:"사용자 정의", eng:"User-defined settings", level:"B1", category:"Адаптация", iconCat:"fas fa-user-cog", mnemonic:"사용자 정의 = user-defined", example:"보고서 사용자 정의 기능을 추가했습니다. → Добавлена функция пользовательской настройки отчётов.", breakdown:{ title:"사용자 정의", components:[{emoji:"👤",root:"사용",ref:"사용",meaning:"использование"},{emoji:"👤",root:"자",ref:"자",meaning:"человек"},{emoji:"🎯",root:"정의",ref:"정의",meaning:"определение"}], logic:"Определение пользователя"}, synonyms:"커스텀 설정", relatedWords:"프로필", formality:"공식적", partOfSpeech:"명사" },
+        { id:62, ru:"Спецификация требований", ko:"요구사항 명세서", eng:"Requirements specification", level:"B1", category:"Адаптация", iconCat:"fas fa-file-contract", mnemonic:"명세서 = specification", example:"요구사항 명세서가 작성됐습니다. → Составлена спецификация требований.", synonyms:"명세서", relatedWords:"SRS", formality:"공식적", partOfSpeech:"명사" },
+        { id:63, ru:"Запрос на изменение", ko:"변경 요청", eng:"Change request", level:"B1", category:"Адаптация", iconCat:"fas fa-exchange-alt", mnemonic:"변경 요청 = change request", example:"변경 요청이 승인됐습니다. → Запрос на изменение согласован.", synonyms:"CR", relatedWords:"형상 관리", formality:"공식적", partOfSpeech:"명사" },
+        { id:64, ru:"Приёмка", ko:"검수", eng:"Acceptance inspection", level:"B1", category:"Адаптация", iconCat:"fas fa-check-circle", mnemonic:"검수 = приёмочные испытания", example:"시스템 검수가 성공적으로 완료됐습니다. → Приёмка системы прошла успешно.", synonyms:"승인 검사", relatedWords:"UAT", formality:"공식적", partOfSpeech:"명사" },
+        { id:65, ru:"Отладка", ko:"디버깅", eng:"Debugging", level:"B1", category:"Адаптация", iconCat:"fas fa-bug", mnemonic:"디버깅 — поиск ошибок", example:"통합 모듈 디버깅을 진행 중입니다. → Выполняется отладка модуля интеграции.", synonyms:"버그 수정", relatedWords:"테스트", formality:"공식적", partOfSpeech:"명사" },
+        { id:66, ru:"Развёртывание", ko:"배포", eng:"Deployment", level:"B1", category:"Адаптация", iconCat:"fas fa-cloud-upload-alt", mnemonic:"배포 = deployment", example:"프로덕션 배포가 완료됐습니다. → Развёртывание на продакшн завершено.", synonyms:"롤아웃", relatedWords:"릴리스", formality:"공식적", partOfSpeech:"명사" },
+        { id:67, ru:"Управление версиями", ko:"버전 관리", eng:"Version control", level:"B1", category:"Адаптация", iconCat:"fas fa-code-branch", mnemonic:"Git для управления версиями", example:"Git을 통한 버전 관리가 적용됐습니다. → Применено управление версиями через Git.", synonyms:"형상 관리", relatedWords:"Git", formality:"공식적", partOfSpeech:"명사" },
+        { id:68, ru:"Логистическая система", ko:"물류 시스템", eng:"Logistics system", level:"B1", category:"Логистика", iconCat:"fas fa-truck", mnemonic:"물류 시스템 = logistics", example:"물류 시스템을 고도화했습니다. → Модернизирована логистическая система.", synonyms:"물류 인프라", relatedWords:"SCM", formality:"공식적", partOfSpeech:"명사" },
+        { id:69, ru:"Управление отгрузкой", ko:"출하 관리", eng:"Shipment management", level:"B1", category:"Логистика", iconCat:"fas fa-shipping-fast", mnemonic:"출하 관리 — управление отгрузкой", example:"출하 관리 프로세스를 개선했습니다. → Улучшен процесс управления отгрузкой.", synonyms:"출하 통제", relatedWords:"배송", formality:"공식적", partOfSpeech:"명사" },
+        { id:70, ru:"Приёмка и отгрузка", ko:"입고/출고", eng:"Receiving / Shipping", level:"B1", category:"Логистика", iconCat:"fas fa-arrow-right-arrow-left", mnemonic:"입고/출고 — входящие/исходящие", example:"입고/출고 데이터를 실시간으로 관리합니다. → Управляем данными приёмки и отгрузки в реальном времени.", breakdown:{ title:"입고/출고", components:[{emoji:"📥",root:"입",ref:"입구",meaning:"вход"},{emoji:"📦",root:"고",ref:"물건",meaning:"товар"},{emoji:"📤",root:"출",ref:"출구",meaning:"выход"}], logic:"Вход товара / Выход товара"}, synonyms:"반입/반출", relatedWords:"재고", formality:"공식적", partOfSpeech:"명사" },
+        { id:71, ru:"Маршрут доставки", ko:"운송 경로", eng:"Transportation route", level:"B1", category:"Логистика", iconCat:"fas fa-route", mnemonic:"운송 경로 — маршрут", example:"최적의 운송 경로를 선정했습니다. → Выбран оптимальный маршрут доставки.", synonyms:"배송 경로", relatedWords:"물류 네트워크", formality:"공식적", partOfSpeech:"명사" },
+        { id:72, ru:"Отслеживание запасов", ko:"재고 위치 추적", eng:"Inventory location tracking", level:"B1", category:"Логистика", iconCat:"fas fa-map-pin", mnemonic:"재고 위치 추적 = отслеживание запасов", example:"재고 위치 추적 시스템을 도입했습니다. → Внедрена система отслеживания запасов.", breakdown:{ title:"재고 위치 추적", components:[{emoji:"📦",root:"재고",ref:"재고",meaning:"запас"},{emoji:"📍",root:"위치",ref:"위치",meaning:"местоположение"},{emoji:"🔍",root:"추적",ref:"추적",meaning:"отслеживание"}], logic:"Отслеживание местоположения запасов"}, synonyms:"재고 트래킹", relatedWords:"RFID", formality:"공식적", partOfSpeech:"명사" },
+        { id:73, ru:"Эффективность логистики", ko:"물류 효율성", eng:"Logistics efficiency", level:"B1", category:"Логистика", iconCat:"fas fa-chart-line", mnemonic:"물류 효율성 = эффективность", example:"물류 효율성이 15% 향상됐습니다. → Эффективность логистики повысилась на 15%.", synonyms:"물류 생산성", relatedWords:"KPI", formality:"공식적", partOfSpeech:"명사" },
+        { id:74, ru:"Система управления складом (WMS)", ko:"창고 관리 시스템", eng:"WMS", level:"B1", category:"Логистика", iconCat:"fas fa-warehouse", mnemonic:"WMS — управление складом", example:"WMS 도입으로 정확도가 향상됐습니다. → Внедрение WMS повысило точность.", breakdown:{ title:"창고 관리 시스템", components:[{emoji:"🏢",root:"창고",ref:"창고",meaning:"склад"},{emoji:"🎯",root:"관리",ref:"관리",meaning:"управление"},{emoji:"💻",root:"시스템",ref:"시스템",meaning:"система"}], logic:"Система управления складом"}, synonyms:"WMS", relatedWords:"재고 관리", formality:"공식적", partOfSpeech:"명사" },
+        
+        // ===== C1 (31 слово, восстанавливаем полный список) =====
+        { id:75, ru:"Внешний подрядчик", ko:"외부 협력사", eng:"External contractor", level:"C1", category:"Подрядчики", iconCat:"fas fa-handshake", mnemonic:"외부 협력사 — внешний партнёр", example:"개발을 위해 외부 협력사가 참여했습니다. → Привлечён внешний подрядчик для разработки.", breakdown:{ title:"외부 협력사", components:[{emoji:"🌍",root:"외부",ref:"외부",meaning:"внешний"},{emoji:"🤝",root:"협력사",ref:"협력사",meaning:"партнёр"}], logic:"Внешний партнёр"}, synonyms:"외주 업체", relatedWords:"계약", formality:"공식적", partOfSpeech:"명사" },
+        { id:76, ru:"Внутренние требования", ko:"내부 요구사항", eng:"Internal requirements", level:"C1", category:"Подрядчики", iconCat:"fas fa-building", mnemonic:"내부 요구사항 — внутренние стандарты", example:"내부 요구사항이 협의됐습니다. → Согласованы внутренние требования.", synonyms:"내부 요구", relatedWords:"표준", formality:"공식적", partOfSpeech:"명사" },
+        { id:77, ru:"Сотрудничество", ko:"협업", eng:"Collaboration", level:"C1", category:"Подрядчики", iconCat:"fas fa-users", mnemonic:"협업 — teamwork", example:"고객사와 긴밀한 협업이 필요합니다. → Необходимо тесное сотрудничество с заказчиком.", synonyms:"협력", relatedWords:"팀워크", formality:"공식적", partOfSpeech:"명사" },
+        { id:78, ru:"Распределение ответственности", ko:"책임 분담", eng:"Distribution of responsibilities", level:"C1", category:"Подрядчики", iconCat:"fas fa-scale-balanced", mnemonic:"책임 분담 = разделение зон ответственности", example:"명확한 책임 분담이 중요합니다. → Важно чёткое распределение ответственности.", synonyms:"역할 분담", relatedWords:"R&R", formality:"공식적", partOfSpeech:"명사" },
+        { id:79, ru:"Область действия контракта", ko:"계약 범위", eng:"Contract scope", level:"C1", category:"Подрядчики", iconCat:"fas fa-file-signature", mnemonic:"계약 범위 — scope of contract", example:"계약 범위가 확대됐습니다. → Область действия контракта расширена.", synonyms:"계약 영역", relatedWords:"SOW", formality:"공식적", partOfSpeech:"명사" },
+        { id:80, ru:"Техническая поддержка", ko:"기술 지원", eng:"Technical support", level:"C1", category:"Подрядчики", iconCat:"fas fa-headset", mnemonic:"기술 지원 = tech support", example:"24시간 기술 지원을 제공합니다. → Предоставляется круглосуточная техническая поддержка.", breakdown:{ title:"기술 지원", components:[{emoji:"🛠️",root:"기술",ref:"기술",meaning:"техника"},{emoji:"🤝",root:"지원",ref:"지원",meaning:"поддержка"}], logic:"Техническая поддержка"}, synonyms:"테크 서포트", relatedWords:"고객 지원", formality:"공식적", partOfSpeech:"명사" },
+        { id:81, ru:"Обучение персонала", ko:"교육 제공", eng:"Staff training", level:"C1", category:"Подрядчики", iconCat:"fas fa-chalkboard-user", mnemonic:"교육 제공 — training", example:"MES 사용을 위한 교육 제공이 완료됐습니다. → Обучение персонала работе с MES завершено.", synonyms:"직원 교육", relatedWords:"워크숍", formality:"공식적", partOfSpeech:"명사" },
+        { id:82, ru:"Техническое обслуживание", ko:"사후 관리", eng:"After-service", level:"C1", category:"Подрядчики", iconCat:"fas fa-wrench", mnemonic:"사후 관리 = after-service", example:"보증 사후 관리 계약을 체결했습니다. → Заключён договор на гарантийное техническое обслуживание.", synonyms:"AS", relatedWords:"유지보수", formality:"공식적", partOfSpeech:"명사" },
+        { id:83, ru:"Сервисное обслуживание", ko:"유지보수", eng:"Maintenance", level:"C1", category:"Подрядчики", iconCat:"fas fa-tools", mnemonic:"유지보수 = maintenance", example:"유지보수 계약이 체결됐습니다. → Заключён договор на сервисное обслуживание.", breakdown:{ title:"유지보수", components:[{emoji:"🔒",root:"유지",ref:"유지",meaning:"поддержание"},{emoji:"🛠️",root:"보수",ref:"보수",meaning:"ремонт"}], logic:"Поддержание и ремонт"}, synonyms:"정비", relatedWords:"AS", formality:"공식적", partOfSpeech:"명사" },
+        { id:84, ru:"Реагирование на сбои", ko:"장애 대응", eng:"Incident response", level:"C1", category:"Подрядчики", iconCat:"fas fa-bell", mnemonic:"장애 대응 = incident response", example:"장애 대응 팀이 구성됐습니다. → Создана группа реагирования на сбои.", breakdown:{ title:"장애 대응", components:[{emoji:"⚠️",root:"장애",ref:"장애",meaning:"сбой"},{emoji:"⚡",root:"대응",ref:"대응",meaning:"реагирование"}], logic:"Реагирование на сбои"}, synonyms:"사고 대응", relatedWords:"모니터링", formality:"공식적", partOfSpeech:"명사" },
+        { id:85, ru:"Резервное копирование", ko:"백업", eng:"Backup", level:"C1", category:"Подрядчики", iconCat:"fas fa-database", mnemonic:"백업 — backup", example:"매일 백업을 실행합니다. → Ежедневное резервное копирование.", synonyms:"백업 복사", relatedWords:"복구", formality:"공식적", partOfSpeech:"명사" },
+        { id:86, ru:"Восстановление данных", ko:"복구", eng:"Recovery", level:"C1", category:"Подрядчики", iconCat:"fas fa-undo-alt", mnemonic:"복구 = восстановление", example:"장애 후 데이터 복구가 완료됐습니다. → Восстановление данных после сбоя завершено.", synonyms:"리커버리", relatedWords:"백업", formality:"공식적", partOfSpeech:"명사" },
+        { id:87, ru:"Каков общий график?", ko:"전체 일정은 어떻게 되나요?", eng:"What is the overall schedule?", level:"C1", category:"Вопросы", iconCat:"fas fa-question-circle", mnemonic:"전체 일정 = общий график", example:"전체 일정은 어떻게 되나요? → Каков общий график?", synonyms:"전체 계획", relatedWords:"일정", formality:"공식적", partOfSpeech:"구" },
+        { id:88, ru:"Как это работает?", ko:"어떤 방식으로 작동하나요?", eng:"How does it work?", level:"C1", category:"Вопросы", iconCat:"fas fa-question-circle", mnemonic:"작동 = работает", example:"MES 시스템은 어떤 방식으로 작동하나요? → Как работает MES система?", synonyms:"작동 원리", relatedWords:"기능", formality:"공식적", partOfSpeech:"구" },
+        { id:89, ru:"Сколько времени потребуется?", ko:"얼마나 시간이 소요되나요?", eng:"How long will it take?", level:"C1", category:"Вопросы", iconCat:"fas fa-hourglass-half", mnemonic:"소요되다 = занимать время", example:"통합에 얼마나 시간이 소요되나요? → Сколько времени займёт интеграция?", synonyms:"소요 시간", relatedWords:"기간", formality:"공식적", partOfSpeech:"구" },
+        { id:90, ru:"Какова процедура?", ko:"절차는 어떻게 되나요?", eng:"What is the procedure?", level:"C1", category:"Вопросы", iconCat:"fas fa-list-ol", mnemonic:"절차 = процедура", example:"검수 절차는 어떻게 되나요? → Какова процедура приёмки?", synonyms:"프로세스", relatedWords:"단계", formality:"공식적", partOfSpeech:"구" },
+        { id:91, ru:"Обновляется ли в реальном времени?", ko:"실시간으로 갱신되나요?", eng:"Is it updated in real time?", level:"C1", category:"Вопросы", iconCat:"fas fa-sync-alt", mnemonic:"갱신 = обновление", example:"데이터가 실시간으로 갱신되나요? → Данные обновляются в реальном времени?", synonyms:"실시간 업데이트", relatedWords:"동기화", formality:"공식적", partOfSpeech:"구" },
+        { id:92, ru:"Возможна ли интеграция?", ko:"연동은 가능한가요?", eng:"Is integration possible?", level:"C1", category:"Вопросы", iconCat:"fas fa-plug", mnemonic:"연동 = интеграция", example:"ERP와 연동은 가능한가요? → Возможна ли интеграция с ERP?", synonyms:"통합 가능", relatedWords:"API", formality:"공식적", partOfSpeech:"구" },
+        { id:93, ru:"На сколько недель запланировано?", ko:"몇 주로 예정되어 있나요?", eng:"How many weeks is it scheduled for?", level:"C1", category:"Вопросы", iconCat:"fas fa-calendar-week", mnemonic:"예정 = запланировано", example:"시범 운영이 몇 주로 예정되어 있나요? → На сколько недель запланирован пилот?", synonyms:"기간", relatedWords:"일정", formality:"공식적", partOfSpeech:"구" },
+        { id:94, ru:"Как это предоставляется?", ko:"어떻게 제공되나요?", eng:"How is it provided?", level:"C1", category:"Вопросы", iconCat:"fas fa-cloud-upload-alt", mnemonic:"제공 = предоставление", example:"보고서는 어떻게 제공되나요? → Как предоставляется отчётность?", synonyms:"제공 방식", relatedWords:"서비스", formality:"공식적", partOfSpeech:"구" },
+        { id:95, ru:"Как проходит приёмка?", ko:"검수 절차는 어떻게 진행되나요?", eng:"How does the acceptance process go?", level:"C1", category:"Вопросы", iconCat:"fas fa-check-double", mnemonic:"검수 절차 = приёмочные испытания", example:"시스템 검수 절차는 어떻게 진행되나요? → Как проходит приёмка системы?", synonyms:"승인 절차", relatedWords:"UAT", formality:"공식적", partOfSpeech:"구" },
+        { id:96, ru:"План действий при задержке?", ko:"지연 시 대응 방안은", eng:"Action plan in case of delay?", level:"C1", category:"Вопросы", iconCat:"fas fa-chart-line", mnemonic:"지연 시 대응 = реагирование на задержки", example:"납기 지연 시 대응 방안은? → План действий при задержке поставки?", synonyms:"지연 대책", relatedWords:"리스크 관리", formality:"공식적", partOfSpeech:"구" },
+        { id:97, ru:"Обсудить ~", ko:"~에 대해 논의하다", eng:"Discuss ~", level:"C1", category:"Деловые", iconCat:"fas fa-comments", mnemonic:"논의하다 = обсуждать", example:"도입 일정에 대해 논의합시다. → Обсудим сроки внедрения.", synonyms:"의논하다", relatedWords:"회의", formality:"공식적", partOfSpeech:"동사" },
+        { id:98, ru:"Основываясь на ~", ko:"~을 기반으로 하다", eng:"Based on ~", level:"C1", category:"Деловые", iconCat:"fas fa-cubes", mnemonic:"기반 = основа", example:"요구사항 명세서를 기반으로 개발합니다. → Разрабатываем, основываясь на спецификации требований.", synonyms:"바탕으로", relatedWords:"근거", formality:"공식적", partOfSpeech:"표현" },
+        { id:99, ru:"Настроить под ~", ko:"~에 맞게 조정하다", eng:"Adjust to ~", level:"C1", category:"Деловые", iconCat:"fas fa-sliders-h", mnemonic:"조정하다 = настраивать", example:"사용자에 맞게 인터페이스를 조정하세요. → Настройте интерфейс под пользователя.", synonyms:"맞추다", relatedWords:"최적화", formality:"공식적", partOfSpeech:"동사" },
+        { id:100, ru:"Учесть ~ в первую очередь", ko:"~을 우선적으로 고려하다", eng:"Consider ~ as a priority", level:"C1", category:"Деловые", iconCat:"fas fa-chart-simple", mnemonic:"우선적으로 = в приоритете", example:"보안을 우선적으로 고려하세요. → Учитывайте безопасность в первую очередь.", synonyms:"최우선 고려", relatedWords:"중요도", formality:"공식적", partOfSpeech:"동사" },
+        { id:101, ru:"Примем решение после согласования", ko:"협의 후 결정하겠습니다", eng:"We will decide after consultation", level:"C1", category:"Деловые", iconCat:"fas fa-gavel", mnemonic:"협의 = согласование", example:"임원진과 협의 후 결정하겠습니다. → Примем решение после согласования с руководством.", synonyms:"결정", relatedWords:"승인", formality:"공식적", partOfSpeech:"표현" },
+        { id:102, ru:"Изучим и дадим ответ", ko:"검토 후 답변드리겠습니다", eng:"We will review and get back to you", level:"C1", category:"Деловые", iconCat:"fas fa-search", mnemonic:"검토 = изучение", example:"명세서 검토 후 답변드리겠습니다. → Изучим спецификацию и дадим ответ.", synonyms:"확인 후 회신", relatedWords:"피드백", formality:"공식적", partOfSpeech:"표현" },
+        { id:103, ru:"Требуются дополнительные обсуждения", ko:"추가 논의가 필요합니다", eng:"Further discussion is needed", level:"C1", category:"Деловые", iconCat:"fas fa-users", mnemonic:"추가 논의 = доп. обсуждения", example:"일정에 대해 추가 논의가 필요합니다. → По срокам требуются дополнительные обсуждения.", synonyms:"더 논의", relatedWords:"회의", formality:"공식적", partOfSpeech:"표현" },
+        { id:104, ru:"Чётко определить зоны ответственности", ko:"책임 소재를 명확히 하다", eng:"Clearly define responsibilities", level:"C1", category:"Деловые", iconCat:"fas fa-clipboard-list", mnemonic:"책임 소재 = зона ответственности", example:"계약서에 책임 소재를 명확히 합시다. → Чётко определим зоны ответственности в контракте.", synonyms:"역할 정의", relatedWords:"R&R", formality:"공식적", partOfSpeech:"표현" },
+        { id:105, ru:"Немедленно сообщать о возникновении проблем", ko:"문제 발생 시 즉시 보고", eng:"Immediately report any issues", level:"C1", category:"Деловые", iconCat:"fas fa-bell", mnemonic:"즉시 보고 = немедленный доклад", example:"IT 인프라 문제 발생 시 즉시 보고하세요. → Немедленно сообщайте о проблемах в IT-инфраструктуре.", synonyms:"즉시 통보", relatedWords:"알람", formality:"공식적", partOfSpeech:"표현" }
+    ];
+
+    // Состояние и логика
+    let currentLevel = "A1";
+    let currentTab = "dictionary";
+    let favorites = new Set();
+    let isLightTheme = false;
+    
+    try {
+        const storedFav = localStorage.getItem("it_kogiok_favorites");
+        if(storedFav) favorites = new Set(JSON.parse(storedFav));
+        const storedTheme = localStorage.getItem("it_kogiok_theme");
+        if(storedTheme === "light") isLightTheme = true;
+    } catch(e) {}
+
+    function applyTheme() {
+        if(isLightTheme) {
+            document.body.classList.add("light-theme");
+            document.getElementById("themeToggle").innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            document.body.classList.remove("light-theme");
+            document.getElementById("themeToggle").innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    }
+    
+    function toggleTheme() {
+        isLightTheme = !isLightTheme;
+        localStorage.setItem("it_kogiok_theme", isLightTheme ? "light" : "dark");
+        applyTheme();
+    }
+
+    function persistFavorites() {
+        localStorage.setItem("it_kogiok_favorites", JSON.stringify([...favorites]));
+    }
+
+    const cardsContainer = document.getElementById("cardsContainer");
+    const emptyMessageDiv = document.getElementById("emptyMessage");
+    const statsBar = document.getElementById("statsBar");
+    const cardCounterSpan = document.getElementById("cardCounter");
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentTab = btn.dataset.tab;
+            renderCurrentView();
+        });
+    });
+
+    const levelBtns = document.querySelectorAll(".level-btn");
+    levelBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            currentLevel = btn.dataset.level;
+            levelBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.body.classList.remove("level-A1", "level-B1", "level-C1");
+            document.body.classList.add(`level-${currentLevel}`);
+            if(currentTab === "dictionary") renderCurrentView();
+            else renderCurrentView();
+        });
+    });
+
+    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+    applyTheme();
+
+    function getWordsByLevel(level) {
+        return wordsDB.filter(w => w.level === level);
+    }
+    function getFavoriteWords() {
+        return wordsDB.filter(w => favorites.has(w.id));
+    }
+
+    function getCategoryStats(words) {
+        const cats = {};
+        words.forEach(w => { cats[w.category] = (cats[w.category] || 0) + 1; });
+        return Object.entries(cats).map(([cat, cnt]) => `${cat} (${cnt})`).join(" • ");
+    }
+
+    function toggleFavorite(wordId, event) {
+        event.stopPropagation();
+        if(favorites.has(wordId)) favorites.delete(wordId);
+        else favorites.add(wordId);
+        persistFavorites();
+        renderCurrentView();
+    }
+
+    function renderCurrentView() {
+        let words = [];
+        if(currentTab === "dictionary") words = getWordsByLevel(currentLevel);
+        else words = getFavoriteWords();
+
+        if(!words.length) {
+            cardsContainer.innerHTML = '';
+            emptyMessageDiv.style.display = "block";
+            emptyMessageDiv.innerHTML = currentTab === "dictionary" ? "📘 В этом уровне нет слов, выберите другой." : "⭐ Нет избранных слов. Нажмите звезду на карточке.";
+            statsBar.style.display = "none";
+            return;
+        }
+        statsBar.style.display = "flex";
+        emptyMessageDiv.style.display = "none";
+        
+        const categoryStatsText = getCategoryStats(words);
+        document.getElementById("currentCategoryStats").innerHTML = categoryStatsText || "Все категории";
+        cardCounterSpan.innerText = words.length;
+        
+        renderCards(words);
+    }
+
+    function getCategoryClass(category) {
+        const map = {
+            "MES": "category-production", "IT": "category-it", "Интеграция": "category-integration",
+            "Отслеживание": "category-logistics", "Планирование": "category-planning", "Адаптация": "category-adaptation",
+            "Логистика": "category-logistics", "Подрядчики": "category-contractor", "Вопросы": "category-questions", "Деловые": "category-business"
+        };
+        return map[category] || "category-it";
+    }
+
+    function renderBreakdown(breakdown) {
+        if (!breakdown) return '';
+        let componentsHtml = '';
+        if (breakdown.components && breakdown.components.length) {
+            componentsHtml = breakdown.components.map(c => `
+                <div class="breakdown-item">
+                    <span class="breakdown-emoji">${c.emoji}</span>
+                    <span class="breakdown-root">${escapeHtml(c.root)}</span>
+                    <span class="breakdown-arrow">←</span>
+                    <span class="breakdown-ref">${escapeHtml(c.ref)}</span>
+                    <span class="breakdown-meaning">(${escapeHtml(c.meaning)})</span>
+                </div>
+            `).join('');
+        }
+        return `
+            <div class="breakdown-block">
+                <div class="breakdown-title"><i class="fas fa-puzzle-piece"></i> РАЗБОР СЛОВА: ${escapeHtml(breakdown.title)}</div>
+                <div class="breakdown-divider"></div>
+                ${componentsHtml}
+                <div class="breakdown-logic">
+                    <div class="logic-label"><i class="fas fa-lightbulb"></i> Логика запоминания:</div>
+                    <div class="logic-text">${escapeHtml(breakdown.logic)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderExtraInfo(word) {
+        let html = `<div class="extra-info">`;
+        if (word.synonyms) html += `<div class="extra-info-item"><span class="extra-info-label"><i class="fas fa-exchange-alt"></i> Синонимы</span><div class="extra-info-value">${escapeHtml(word.synonyms)}</div></div>`;
+        if (word.relatedWords) html += `<div class="extra-info-item"><span class="extra-info-label"><i class="fas fa-link"></i> Связанные слова</span><div class="extra-info-value">${escapeHtml(word.relatedWords)}</div></div>`;
+        if (word.formality) html += `<div class="extra-info-item"><span class="extra-info-label"><i class="fas fa-briefcase"></i> Формальность</span><div class="extra-info-value">${escapeHtml(word.formality === "공식적" ? "📋 Официальный" : "💬 Неофициальный")}</div></div>`;
+        if (word.partOfSpeech) html += `<div class="extra-info-item"><span class="extra-info-label"><i class="fas fa-language"></i> Часть речи</span><div class="extra-info-value">${escapeHtml(word.partOfSpeech === "명사" ? "명사 (существительное)" : word.partOfSpeech)}</div></div>`;
+        if (word.extra) html += `<div class="extra-info-item"><span class="extra-info-label"><i class="fas fa-info-circle"></i> Дополнительно</span><div class="extra-info-value">${escapeHtml(word.extra)}</div></div>`;
+        html += `</div>`;
+        return html;
+    }
+
+    function renderCards(wordsArray) {
+        cardsContainer.innerHTML = "";
+        wordsArray.forEach((word, idx) => {
+            const isFav = favorites.has(word.id);
+            const categoryClass = getCategoryClass(word.category);
+            const card = document.createElement("div");
+            card.className = `card ${categoryClass} ${isFav ? 'favorite-card' : ''}`;
+            card.innerHTML = `
+                <div class="category-icon"><i class="${word.iconCat}"></i></div>
+                <div class="word-russian">${escapeHtml(word.ru)}</div>
+                <div class="korean-block">
+                    <span class="word-korean">${escapeHtml(word.ko)}</span>
+                    <span class="english-trans">[${escapeHtml(word.eng)}]</span>
+                </div>
+                <div class="mnemonic-block"><i class="fas fa-lightbulb"></i> ${escapeHtml(word.mnemonic)}</div>
+                <div class="example-block">
+                    <div class="example-kr">${escapeHtml(formatExampleKorean(word.example))}</div>
+                    <div class="example-ru">${escapeHtml(formatExampleRussian(word.example))}</div>
+                </div>
+                ${renderBreakdown(word.breakdown)}
+                ${renderExtraInfo(word)}
+                <div class="card-footer">
+                    <button class="fav-btn ${isFav ? 'active-fav' : ''}" data-id="${word.id}"><i class="fas fa-star"></i></button>
+                </div>
+            `;
+            const favBtn = card.querySelector(".fav-btn");
+            favBtn.addEventListener("click", (e) => toggleFavorite(word.id, e));
+            cardsContainer.appendChild(card);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if(entry.isIntersecting) {
+                    const card = entry.target;
+                    const allCards = Array.from(document.querySelectorAll('.card'));
+                    const index = allCards.indexOf(card);
+                    const delay = Math.min(index * 0.04, 0.4);
+                    setTimeout(() => card.classList.add('visible'), delay * 1000);
+                    observer.unobserve(card);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.card').forEach(c => observer.observe(c));
+    }
+
+    function formatExampleKorean(example) {
+        if(!example) return "";
+        const parts = example.split("→");
+        return parts[0].trim();
+    }
+    function formatExampleRussian(example) {
+        if(!example) return "";
+        const parts = example.split("→");
+        if(parts.length > 1) return parts[1].trim();
+        return "";
+    }
+
+    function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    window.addEventListener("scroll", () => { if(window.scrollY > 300) scrollBtn.style.display = "flex"; else scrollBtn.style.display = "none"; });
+    scrollBtn.style.display = "none";
+
+    document.querySelector('.level-btn[data-level="A1"]').classList.add("active");
+    document.body.classList.add("level-A1");
+    renderCurrentView();
+</script>
+</body>
+</html>
