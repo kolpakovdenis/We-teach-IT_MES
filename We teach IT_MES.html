@@ -247,6 +247,7 @@
         .card.category-questions { border-left: 8px solid #14b8a6; }
         .card.category-business { border-left: 8px solid #f97316; }
         .card.category-it { border-left: 8px solid #06b6d4; }
+        .card.category-qa { border-left: 8px solid #a855f7; } /* новый цвет для QA */
 
         .category-icon {
             font-size: 2rem;
@@ -474,7 +475,7 @@
     <div class="glass-panel header">
         <div class="title">
             <h1><i class="fas fa-microchip"></i> IT: 코기억</h1>
-            <p>한국어 • Русский — MES / IT термины</p>
+            <p>한국어 • Русский — MES / IT термины + QA интеграция</p>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему"><i class="fas fa-moon"></i></button>
     </div>
@@ -495,7 +496,7 @@
     </div>
     <div id="cardsContainer" class="cards-grid"></div>
     <div id="emptyMessage" class="empty-state" style="display: none;"></div>
-    <footer>⭐ Нажмите на звезду → в избранное | Синонимы выделены зелёной рамкой</footer>
+    <footer>⭐ Нажмите на звезду → в избранное | Блок «Интеграция с QA» (C1) содержит вопросы и фразы для диалогов с разработчиками</footer>
 </div>
 <button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
     <svg class="chevron-big" viewBox="0 0 30 20"><polyline points="2,16 15,3 28,16" stroke="white" fill="none" stroke-width="2.5"/></svg>
@@ -504,10 +505,10 @@
 
 <script>
     // --------------------------------------------------------------
-    // БАЗА ДАННЫХ: 107 терминов по 9 блокам (из Word-документа)
+    // ПОЛНЫЙ МАССИВ СЛОВ (107 исходных + 18 новых из QA интеграции) = 125 карточек
     // --------------------------------------------------------------
     const wordsDB = [
-        // ---------- Блок 1: Базовая терминология MES и производства (A1, 29) ----------
+        // ---------- 1. Базовая терминология MES и производства (A1, 29 слов) ----------
         { id:1, ru:"Система MES", ko:"MES 시스템", eng:"MES System", level:"A1", category:"MES", iconCat:"fas fa-industry", mnemonic:"MES — это связующее звено между ERP и цехом.", example:"MES 시스템이 생산 현황을 실시간으로 보여줍니다. → MES система показывает статус производства в реальном времени.", synonyms:"" },
         { id:2, ru:"Система управления производственным процессом", ko:"생산 실행 시스템", eng:"Manufacturing Execution System", level:"A1", category:"MES", iconCat:"fas fa-diagram-project", mnemonic:"생산 (производство) + 실행 (выполнение) = система исполнения производства.", example:"생산 실행 시스템 도입으로 납기 준수율이 향상됐습니다. → Внедрение MES повысило соблюдение сроков поставки.", synonyms:"MES" },
         { id:3, ru:"Автоматизация завода", ko:"공장 자동화", eng:"Factory automation", level:"A1", category:"MES", iconCat:"fas fa-robot", mnemonic:"공장 (завод) + 자동화 (автоматизация) → автоматизация производства.", example:"공장 자동화로 인해 생산성이 20% 증가했습니다. → Автоматизация завода повысила производительность на 20%.", synonyms:"FA" },
@@ -536,7 +537,7 @@
         { id:26, ru:"Масштабируемость", ko:"확장성", eng:"Scalability", level:"A1", category:"IT", iconCat:"fas fa-chart-line", mnemonic:"Способность расти.", example:"클라우드 기반은 확장성이 뛰어납니다. → Облачная платформа отличается высокой масштабируемостью.", synonyms:"" },
         { id:27, ru:"Совместимость", ko:"호환성", eng:"Compatibility", level:"A1", category:"IT", iconCat:"fas fa-exchange-alt", mnemonic:"Совместимость устройств и систем.", example:"이 장비는 기존 시스템과 호환성이 좋습니다. → Это оборудование совместимо с существующей системой.", synonyms:"" },
 
-        // ---------- Блок 2: Интеграция и подключение (B1, 11) ----------
+        // ---------- 2. Интеграция и подключение (B1, 11) ----------
         { id:28, ru:"Интеграция", ko:"통합", eng:"Integration", level:"B1", category:"Интеграция", iconCat:"fas fa-code-branch", mnemonic:"Объединение систем.", example:"ERP와 MES 통합이 완료되었습니다. → Интеграция ERP и MES завершена.", synonyms:"" },
         { id:29, ru:"Синхронизация / взаимодействие систем", ko:"연동", eng:"Interworking", level:"B1", category:"Интеграция", iconCat:"fas fa-sync-alt", mnemonic:"Связанная работа систем.", example:"WMS와 연동하여 재고를 실시간으로 관리합니다. → Благодаря синхронизации с WMS управляем запасами в реальном времени.", synonyms:"" },
         { id:30, ru:"Подключение", ko:"연결", eng:"Connection", level:"B1", category:"Интеграция", iconCat:"fas fa-plug", mnemonic:"Установка связи.", example:"센서 연결 상태를 확인하세요. → Проверьте состояние подключения датчиков.", synonyms:"" },
@@ -549,7 +550,7 @@
         { id:37, ru:"Единая платформа", ko:"단일 플랫폼", eng:"Single platform", level:"B1", category:"Интеграция", iconCat:"fas fa-layer-group", mnemonic:"Унифицированная среда.", example:"단일 플랫폼으로 모든 공장을 통합 관리합니다. → Единая платформа объединяет управление всеми заводами.", synonyms:"" },
         { id:38, ru:"Шлюз", ko:"게이트웨이", eng:"Gateway", level:"B1", category:"Интеграция", iconCat:"fas fa-network-wired", mnemonic:"Узел передачи данных.", example:"IoT 게이트웨이를 통해 센서 데이터를 수집합니다. → Через IoT-шлюз собираются данные с датчиков.", synonyms:"" },
 
-        // ---------- Блок 3: Отслеживание продукции и размещение (B1, 9) ----------
+        // ---------- 3. Отслеживание продукции и размещение (B1, 9) ----------
         { id:39, ru:"Отслеживание продукции", ko:"제품 추적", eng:"Product tracking", level:"B1", category:"Отслеживание", iconCat:"fas fa-map-marker-alt", mnemonic:"Прослеживаемость изделий.", example:"제품 추적 시스템으로 이력 관리가 가능합니다. → Система отслеживания позволяет управлять историей продукции.", synonyms:"" },
         { id:40, ru:"Определение местоположения", ko:"위치 파악", eng:"Location identification", level:"B1", category:"Отслеживание", iconCat:"fas fa-location-dot", mnemonic:"Геопозиционирование.", example:"RFID가 위치 파악을 돕습니다. → RFID помогает определить местоположение.", synonyms:"" },
         { id:41, ru:"Управление запасами", ko:"재고 관리", eng:"Inventory management", level:"B1", category:"Отслеживание", iconCat:"fas fa-boxes", mnemonic:"Контроль склада.", example:"재고 관리 시스템이 실시간으로 수량을 반영합니다. → Система управления запасами отражает количество в реальном времени.", synonyms:"" },
@@ -560,7 +561,7 @@
         { id:46, ru:"Система определения местоположения", ko:"위치 정보 시스템", eng:"Location system", level:"B1", category:"Отслеживание", iconCat:"fas fa-satellite", mnemonic:"LBS.", example:"창고 내 위치 정보 시스템을 도입했습니다. → Внедрена система определения местоположения на складе.", synonyms:"LBS" },
         { id:47, ru:"Отслеживание местоположения в реальном времени", ko:"실시간 위치 추적", eng:"Real-time location tracking", level:"B1", category:"Отслеживание", iconCat:"fas fa-location-arrow", mnemonic:"RTLS.", example:"차량 실시간 위치 추적이 가능합니다. → Возможно отслеживание местоположения транспорта в реальном времени.", synonyms:"RTLS" },
 
-        // ---------- Блок 4: Сроки работ и планирование (B1, 9) ----------
+        // ---------- 4. Сроки работ и планирование (B1, 9) ----------
         { id:48, ru:"Сроки внедрения", ko:"도입 일정", eng:"Implementation schedule", level:"B1", category:"Планирование", iconCat:"fas fa-calendar-alt", mnemonic:"План запуска.", example:"도입 일정을 조정했습니다. → Скорректированы сроки внедрения.", synonyms:"" },
         { id:49, ru:"Крайний срок", ko:"마감일", eng:"Deadline", level:"B1", category:"Планирование", iconCat:"fas fa-hourglass-end", mnemonic:"Дедлайн.", example:"마감일은 5월 30일입니다. → Крайний срок — 30 мая.", synonyms:"" },
         { id:50, ru:"Срок поставки", ko:"납기일", eng:"Delivery date", level:"B1", category:"Планирование", iconCat:"fas fa-truck", mnemonic:"Дата отгрузки.", example:"장비 납기일을 확인하세요. → Проверьте срок поставки оборудования.", synonyms:"" },
@@ -571,7 +572,7 @@
         { id:55, ru:"Этапы проекта", ko:"프로젝트 단계", eng:"Project phases", level:"B1", category:"Планирование", iconCat:"fas fa-diagram-project", mnemonic:"Фазы проекта.", example:"프로젝트 단계가 정의됐습니다. → Определены этапы проекта.", synonyms:"" },
         { id:56, ru:"Момент завершения", ko:"완료 시점", eng:"Completion point", level:"B1", category:"Планирование", iconCat:"fas fa-flag-checkered", mnemonic:"Время окончания.", example:"완료 시점이 협의됐습니다. → Момент завершения согласован.", synonyms:"" },
 
-        // ---------- Блок 5: Адаптация системы под запросы (B1, 11) ----------
+        // ---------- 5. Адаптация системы под запросы (B1, 11) ----------
         { id:57, ru:"Кастомизация", ko:"맞춤화", eng:"Customization", level:"B1", category:"Адаптация", iconCat:"fas fa-pen-ruler", mnemonic:"Настройка под клиента.", example:"기술자에 맞춘 인터페이스 맞춤화. → Кастомизация интерфейса под технологов.", synonyms:"" },
         { id:58, ru:"Учёт требований", ko:"요구사항 반영", eng:"Requirements incorporation", level:"B1", category:"Адаптация", iconCat:"fas fa-clipboard-list", mnemonic:"Реализация пожеланий.", example:"고객 요구사항 반영이 완료됐습니다. → Учёт требований заказчика завершён.", synonyms:"" },
         { id:59, ru:"Модификация системы", ko:"시스템 수정", eng:"System modification", level:"B1", category:"Адаптация", iconCat:"fas fa-code-branch", mnemonic:"Доработка ПО.", example:"새 표준에 맞는 시스템 수정이 필요합니다. → Требуется модификация системы под новый стандарт.", synonyms:"" },
@@ -584,7 +585,7 @@
         { id:66, ru:"Развёртывание", ko:"배포", eng:"Deployment", level:"B1", category:"Адаптация", iconCat:"fas fa-cloud-upload-alt", mnemonic:"Релиз в эксплуатацию.", example:"프로덕션 배포가 완료됐습니다. → Развёртывание на продакшн завершено.", synonyms:"" },
         { id:67, ru:"Управление версиями", ko:"버전 관리", eng:"Version control", level:"B1", category:"Адаптация", iconCat:"fas fa-code-branch", mnemonic:"Git, контроль изменений.", example:"Git을 통한 버전 관리가 적용됐습니다. → Применено управление версиями через Git.", synonyms:"" },
 
-        // ---------- Блок 6: Подрядчики и взаимодействие (B1, 12) ----------
+        // ---------- 6. Подрядчики и взаимодействие (B1, 12) ----------
         { id:68, ru:"Внешний подрядчик", ko:"외부 협력사", eng:"External contractor", level:"B1", category:"Подрядчики", iconCat:"fas fa-handshake", mnemonic:"Сторонний исполнитель.", example:"개발을 위해 외부 협력사가 참여했습니다. → Привлечён внешний подрядчик для разработки.", synonyms:"" },
         { id:69, ru:"Внутренние требования", ko:"내부 요구사항", eng:"Internal requirements", level:"B1", category:"Подрядчики", iconCat:"fas fa-building", mnemonic:"Стандарты компании.", example:"내부 요구사항이 협의됐습니다. → Согласованы внутренние требования.", synonyms:"" },
         { id:70, ru:"Сотрудничество", ko:"협업", eng:"Collaboration", level:"B1", category:"Подрядчики", iconCat:"fas fa-users", mnemonic:"Teamwork.", example:"고객사와 긴밀한 협업이 필요합니다. → Необходимо тесное сотрудничество с заказчиком.", synonyms:"" },
@@ -598,7 +599,7 @@
         { id:78, ru:"Резервное копирование", ko:"백업", eng:"Backup", level:"B1", category:"Подрядчики", iconCat:"fas fa-database", mnemonic:"Backup данных.", example:"매일 백업을 실행합니다. → Ежедневное резервное копирование.", synonyms:"" },
         { id:79, ru:"Восстановление данных", ko:"복구", eng:"Recovery", level:"B1", category:"Подрядчики", iconCat:"fas fa-undo-alt", mnemonic:"Восстановление после сбоя.", example:"장애 후 데이터 복구가 완료됐습니다. → Восстановление данных после сбоя завершено.", synonyms:"" },
 
-        // ---------- Блок 7: Логистика (B1, 7) ----------
+        // ---------- 7. Логистика (B1, 7) ----------
         { id:80, ru:"Логистическая система", ko:"물류 시스템", eng:"Logistics system", level:"B1", category:"Логистика", iconCat:"fas fa-truck", mnemonic:"Управление цепочкой поставок.", example:"물류 시스템을 고도화했습니다. → Модернизирована логистическая система.", synonyms:"" },
         { id:81, ru:"Управление отгрузкой", ko:"출하 관리", eng:"Shipment management", level:"B1", category:"Логистика", iconCat:"fas fa-shipping-fast", mnemonic:"Контроль отправок.", example:"출하 관리 프로세스를 개선했습니다. → Улучшен процесс управления отгрузкой.", synonyms:"" },
         { id:82, ru:"Приёмка и отгрузка", ko:"입고/출고", eng:"Receiving/Shipping", level:"B1", category:"Логистика", iconCat:"fas fa-arrow-right-arrow-left", mnemonic:"Вход/выход товаров.", example:"입고/출고 데이터를 실시간으로 관리합니다. → Управляем данными приёмки и отгрузки в реальном времени.", synonyms:"" },
@@ -607,7 +608,7 @@
         { id:85, ru:"Эффективность логистики", ko:"물류 효율성", eng:"Logistics efficiency", level:"B1", category:"Логистика", iconCat:"fas fa-chart-line", mnemonic:"KPI логистики.", example:"물류 효율성이 15% 향상됐습니다. → Эффективность логистики повысилась на 15%.", synonyms:"" },
         { id:86, ru:"Система управления складом (WMS)", ko:"창고 관리 시스템", eng:"WMS", level:"B1", category:"Логистика", iconCat:"fas fa-warehouse", mnemonic:"WMS.", example:"WMS 도입으로 정확도가 향상됐습니다. → Внедрение WMS повысило точность.", synonyms:"" },
 
-        // ---------- Блок 8: Практические вопросы для переговоров (C1, 10) ----------
+        // ---------- 8. Практические вопросы для переговоров (C1, 10) ----------
         { id:87, ru:"Каков общий график", ko:"전체 일정은 어떻게 되나요", eng:"What is the overall schedule?", level:"C1", category:"Вопросы", iconCat:"fas fa-question-circle", mnemonic:"Уточнение сроков.", example:"전체 일정은 어떻게 되나요? → Каков общий график?", synonyms:"" },
         { id:88, ru:"Как это работает", ko:"어떤 방식으로 작동하나요", eng:"How does it work?", level:"C1", category:"Вопросы", iconCat:"fas fa-question-circle", mnemonic:"Вопрос о принципе работы.", example:"MES 시스템은 어떤 방식으로 작동하나요? → Как работает MES система?", synonyms:"" },
         { id:89, ru:"Сколько времени потребуется", ko:"얼마나 시간이 소요되나요", eng:"How long will it take?", level:"C1", category:"Вопросы", iconCat:"fas fa-hourglass-half", mnemonic:"Оценка длительности.", example:"통합에 얼마나 시간이 소요되나요? → Сколько времени займёт интеграция?", synonyms:"" },
@@ -619,7 +620,7 @@
         { id:95, ru:"Как проходит приёмка", ko:"검수 절차는 어떻게 진행되나요", eng:"Acceptance process?", level:"C1", category:"Вопросы", iconCat:"fas fa-check-double", mnemonic:"Детали приёмки.", example:"시스템 검수 절차는 어떻게 진행되나요? → Как проходит приёмка системы?", synonyms:"" },
         { id:96, ru:"План действий при задержке", ko:"지연 시 대응 방안은", eng:"Delay action plan?", level:"C1", category:"Вопросы", iconCat:"fas fa-chart-line", mnemonic:"Что делать при срыве сроков.", example:"납기 지연 시 대응 방안은? → План действий при задержке поставки?", synonyms:"" },
 
-        // ---------- Блок 9: Полезные деловые выражения (C1, 9) ----------
+        // ---------- 9. Полезные деловые выражения (C1, 9) ----------
         { id:97, ru:"Обсудить ~", ko:"~에 대해 논의하다", eng:"Discuss ~", level:"C1", category:"Деловые", iconCat:"fas fa-comments", mnemonic:"Начать обсуждение.", example:"도입 일정에 대해 논의합시다. → Обсудим сроки внедрения.", synonyms:"" },
         { id:98, ru:"Основываясь на ~", ko:"~을 기반으로 하다", eng:"Based on ~", level:"C1", category:"Деловые", iconCat:"fas fa-cubes", mnemonic:"Отталкиваться от чего-то.", example:"요구사항 명세서를 기반으로 개발합니다. → Разрабатываем, основываясь на спецификации требований.", synonyms:"" },
         { id:99, ru:"Настроить под ~", ko:"~에 맞게 조정하다", eng:"Adjust to ~", level:"C1", category:"Деловые", iconCat:"fas fa-sliders-h", mnemonic:"Адаптировать под.", example:"사용자에 맞게 인터페이스를 조정하세요. → Настройте интерфейс под пользователя.", synonyms:"" },
@@ -628,7 +629,28 @@
         { id:102, ru:"Изучим и дадим ответ", ko:"검토 후 답변드리겠습니다", eng:"We will review and reply", level:"C1", category:"Деловые", iconCat:"fas fa-search", mnemonic:"Обещание обратной связи.", example:"명세서 검토 후 답변드리겠습니다. → Изучим спецификацию и дадим ответ.", synonyms:"" },
         { id:103, ru:"Требуются дополнительные обсуждения", ko:"추가 논의가 필요합니다", eng:"Further discussion needed", level:"C1", category:"Деловые", iconCat:"fas fa-users", mnemonic:"Нужно ещё обсудить.", example:"일정에 대해 추가 논의가 필요합니다. → По срокам требуются дополнительные обсуждения.", synonyms:"" },
         { id:104, ru:"Чётко определить зоны ответственности", ko:"책임 소재를 명확히 하다", eng:"Clearly define responsibilities", level:"C1", category:"Деловые", iconCat:"fas fa-clipboard-list", mnemonic:"Разграничить обязанности.", example:"계약서에 책임 소재를 명확히 합시다. → Чётко определим зоны ответственности в контракте.", synonyms:"" },
-        { id:105, ru:"Немедленно сообщать о возникновении проблем", ko:"문제 발생 시 즉시 보고", eng:"Report issues immediately", level:"C1", category:"Деловые", iconCat:"fas fa-bell", mnemonic:"Быстрое информирование.", example:"IT 인프라 문제 발생 시 즉시 보고하세요. → Немедленно сообщайте о проблемах в IT-инфраструктуре.", synonyms:"" }
+        { id:105, ru:"Немедленно сообщать о возникновении проблем", ko:"문제 발생 시 즉시 보고", eng:"Report issues immediately", level:"C1", category:"Деловые", iconCat:"fas fa-bell", mnemonic:"Быстрое информирование.", example:"IT 인프라 문제 발생 시 즉시 보고하세요. → Немедленно сообщайте о проблемах в IT-инфраструктуре.", synonyms:"" },
+
+        // ---------- НОВЫЙ БЛОК: Интеграция с QA / Управление качеством (C1) 18 карточек ----------
+        { id:106, ru:"Протокол инспекции / Протокол контроля", ko:"검사 프로토콜 / 검사 문서", eng:"Inspection protocol", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-file-alt", mnemonic:"검사 (инспекция) + 프로토콜 (протокол) — документ с результатами проверки партии по нескольким параметрам.", example:"MES에 검사 프로토콜에 해당하는 객체가 있습니까? → Существует ли в MES объект, соответствующий протоколу инспекции?", synonyms:"검사 문서" },
+        { id:107, ru:"Объект инспекции", ko:"검사 객체", eng:"Inspection object", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-cube", mnemonic:"Сущность в MES, хранящая результаты контроля.", example:"MES에 검사 객체가 존재합니까? → Существует ли в MES объект инспекции?", synonyms:"" },
+        { id:108, ru:"Идентификатор протокола", ko:"프로토콜 식별자", eng:"Protocol identifier", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-barcode", mnemonic:"Уникальный ID протокола для ссылки в интеграции.", example:"통합 흐름에 프로토콜 식별자를 추가할 수 있습니까? → Можно ли добавить идентификатор протокола в интеграционный поток?", synonyms:"프로토콜 ID" },
+        { id:109, ru:"Событие отправки результатов", ko:"결과 전송 이벤트", eng:"Result sending event", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-bell", mnemonic:"Триггер, по которому данные отправляются из MES.", example:"검사 결과는 어떤 이벤트로 전송됩니까? → По какому событию отправляются результаты контроля?", synonyms:"전송 트리거" },
+        { id:110, ru:"Время начала инспекции", ko:"검사 시작 시간", eng:"Inspection start time", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-hourglass-start", mnemonic:"Атрибут INSPTIME может означать время начала.", example:"INSPTIME 속성은 시작 시간을 의미합니까? → Что означает атрибут INSPTIME — время начала?", synonyms:"" },
+        { id:111, ru:"Время завершения инспекции", ko:"검사 종료 시간", eng:"Inspection end time", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-hourglass-end", mnemonic:"Альтернативное значение INSPTIME — время окончания.", example:"INSPTIME 속성은 종료 시간을 의미합니까? → Что означает атрибут INSPTIME — время завершения?", synonyms:"" },
+        { id:112, ru:"Группировка по протоколу", ko:"프로토콜별 그룹화", eng:"Grouping by protocol", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-layer-group", mnemonic:"Объединение результатов нескольких измерений в один пакет.", example:"결과를 프로토콜별로 그룹화하여 전송할 수 있습니까? → Можно ли передавать результаты в группировке по протоколу?", synonyms:"" },
+        { id:113, ru:"Единица измерения (UNITID)", ko:"측정 단위 (UNITID)", eng:"Unit of measurement", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-ruler", mnemonic:"Идентификатор единицы измерения (например, °C, cP).", example:"통합 흐름에 측정 단위 정보(UNITID)를 추가할 수 있습니까? → Можете ли вы добавить в интеграционный поток информацию о единицах измерения?", synonyms:"" },
+        { id:114, ru:"Пользователь-инспектор", ko:"검사자", eng:"Inspector", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-user-check", mnemonic:"Сотрудник, выполнивший контроль.", example:"통합 흐름에 검사를 수행한 사용자 정보를 추가할 수 있습니까? → Можете ли вы добавить в интеграционный поток информацию о пользователе, который провел инспекцию?", synonyms:"" },
+        { id:115, ru:"Версионность инспекционных записей", ko:"검사 기록 버전 관리", eng:"Versioning of inspection records", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-code-branch", mnemonic:"Отслеживание изменений в инспекционных данных.", example:"검사 기록에 버전 관리가 이루어집니까? → Ведется ли версионность у инспекционных записей?", synonyms:"" },
+        { id:116, ru:"Существует ли в MES объект, соответствующий протоколу инспекции?", ko:"MES에 검사 프로토콜에 해당하는 객체가 있습니까?", eng:"Is there an inspection protocol object in MES?", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-question-circle", mnemonic:"Уточнение наличия объектов для QA.", example:"MES에 검사 프로토콜에 해당하는 객체가 있습니까? → Существует ли в MES объект, соответствующий протоколу инспекции?", synonyms:"" },
+        { id:117, ru:"Можно ли добавить идентификатор протокола в интеграционный поток?", ko:"통합 흐름에 프로토콜 식별자를 추가할 수 있습니까?", eng:"Can we add protocol ID to integration flow?", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-question-circle", mnemonic:"Вопрос о добавлении ID.", example:"통합 흐름에 프로토콜 식별자를 추가할 수 있습니까? → Можно ли добавить идентификатор протокола в интеграционный поток?", synonyms:"" },
+        { id:118, ru:"По какому событию отправляются результаты контроля?", ko:"검사 결과는 어떤 이벤트로 전송됩니까?", eng:"What event triggers sending inspection results?", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-question-circle", mnemonic:"Уточнение события отправки.", example:"검사 결과는 어떤 이벤트로 전송됩니까? → По какому событию отправляются результаты контроля?", synonyms:"" },
+        { id:119, ru:"Можно ли передавать результаты в группировке по протоколу?", ko:"결과를 프로토콜별로 그룹화하여 전송할 수 있습니까?", eng:"Can results be grouped by protocol?", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-question-circle", mnemonic:"Группировка для удобства аналитики.", example:"결과를 프로토콜별로 그룹화하여 전송할 수 있습니까? → Можно ли передавать результаты в группировке по протоколу?", synonyms:"" },
+        { id:120, ru:"Добавить информацию о единице измерения (UNITID)", ko:"측정 단위 정보(UNITID)를 추가하다", eng:"Add unit of measure info (UNITID)", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-plus-circle", mnemonic:"Уточнение о добавлении UNITID в поток.", example:"통합 흐름에 측정 단위 정보(UNITID)를 추가해 주세요. → Добавьте, пожалуйста, информацию о единицах измерения в интеграционный поток.", synonyms:"" },
+        { id:121, ru:"Добавить информацию о пользователе-инспекторе", ko:"검사자 정보를 추가하다", eng:"Add inspector information", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-user-plus", mnemonic:"Запрос на включение данных об инспекторе.", example:"통합 흐름에 검사자 정보를 추가해 주세요. → Добавьте, пожалуйста, информацию о пользователе, который провел инспекцию.", synonyms:"" },
+        { id:122, ru:"Обеспечить версионность инспекционных записей", ko:"검사 기록 버전 관리를 보장하다", eng:"Ensure versioning of inspection records", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-check-double", mnemonic:"Требование к управлению версиями.", example:"검사 기록 버전 관리를 통합 흐름에 추가해 주세요. → Пожалуйста, добавьте информацию о версионности в интеграционный поток.", synonyms:"" },
+        { id:123, ru:"Уточнить событие отправки", ko:"전송 이벤트를 확인하다", eng:"Clarify the sending event", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-search", mnemonic:"Уточнение триггера отправки.", example:"전송 이벤트를 확인해 주세요. → Уточните, пожалуйста, событие отправки.", synonyms:"" },
+        { id:124, ru:"Передать результаты по протоколу", ko:"프로토콜 단위로 결과를 전달하다", eng:"Transfer results grouped by protocol", level:"C1", category:"Интеграция с QA", iconCat:"fas fa-share-square", mnemonic:"Действие по отправке сгруппированных данных.", example:"프로토콜 단위로 결과를 전달해 주세요. → Передайте, пожалуйста, результаты в группировке по протоколу.", synonyms:"" }
     ];
 
     // --------------------------------------------------------------
@@ -712,7 +734,8 @@
         const map = {
             "MES": "category-production", "IT": "category-it", "Интеграция": "category-integration",
             "Отслеживание": "category-logistics", "Планирование": "category-planning", "Адаптация": "category-adaptation",
-            "Логистика": "category-logistics", "Подрядчики": "category-contractor", "Вопросы": "category-questions", "Деловые": "category-business"
+            "Логистика": "category-logistics", "Подрядчики": "category-contractor", "Вопросы": "category-questions",
+            "Деловые": "category-business", "Интеграция с QA": "category-qa"
         };
         return map[category] || "category-it";
     }
